@@ -1,31 +1,27 @@
 "use client";
 
-import React, { Suspense, useState } from "react";
+import React, { Suspense, useState, ReactNode } from "react";
 import { FaGripLines } from "react-icons/fa";
 import { FaXmark } from "react-icons/fa6";
 import CreateHabitButton from "../Controls/Buttons/CreateHabitButton";
 import DaysOfMonthSkeleton from "../Skeletons/DaysOfMonthSkeleton";
 import ContentSkeleton from "../Skeletons/ContentSkeleton";
 
-interface SidebarProps {
-  children: React.ReactNode | React.ReactNode[];
-}
-
 interface TrackerProps {
-  header: React.ReactNode | React.ReactNode[];
-  aside: React.ReactNode | React.ReactNode[];
-  sidebar: React.ReactNode | React.ReactNode[];
-  content: React.ReactNode | React.ReactNode[];
-  daysOfMonth: React.ReactNode | React.ReactNode[];
+  header?: ReactNode | ReactNode[];
+  aside?: ReactNode | ReactNode[];
+  sidebar?: ReactNode | ReactNode[];
+  content?: ReactNode | ReactNode[];
+  daysOfMonth?: ReactNode | ReactNode[];
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ children }) => {
+const Sidebar = ({ children }: { children?: ReactNode | ReactNode[] }) => {
   const [isCollapsed, setIsCollapsed] = useState(true);
-  const classes = `transition-all duration-200 h-full
+  const containerClasses = `h-full
     ${isCollapsed ? "bg-transparent hidden" : ""}
   `;
 
-  const buttonClasses = `p-2 h-8 rounded-lg hover:bg-neutral-300 transition-all duration-100 bg-neutral-400 flex justify-center
+  const buttonClasses = `p-2 h-8 rounded-md hover:bg-neutral-300 bg-neutral-400 flex justify-center
     ${isCollapsed ? "w-8" : "w-full"}
   `;
 
@@ -37,7 +33,7 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
       >
         {isCollapsed ? <FaGripLines /> : <FaXmark />}
       </button>
-      <div className={classes}>{children}</div>
+      <div className={containerClasses}>{children}</div>
     </div>
   );
 };
@@ -51,11 +47,8 @@ const Tracker: React.FC<TrackerProps> = ({
 }) => {
   const handleCreateHabit = () => {};
 
-  const fallback = <div className="w-full bg-rose-900 h-full ">Loading...</div>;
-
   return (
     <>
-      {}
       <div className="flex flex-col gap-2 w-[90%] h-[80%] bg-gradient-to-br from-sky-200/30 to-neutral-100/20 border-[1px] border-white/40 backdrop-blur-sm rounded-xl p-2 z-10">
         {/* header */}
         <div className="w-full rounded-md flex items-center jusify-center overflow-y-auto">
@@ -69,17 +62,15 @@ const Tracker: React.FC<TrackerProps> = ({
             <Sidebar>{sidebar}</Sidebar>
           </div>
 
-          {/* main content */}
+          {/* content container */}
           <div className="bg-neutral-100 flex flex-1 h-full min-w-[180px] rounded-lg overflow-auto">
             <div className="flex h-full min-w-[180px] flex-col border-r-2 border-neutral-400 rounded-s-md">
-              {/* HABIT label container */}
+              {/* HABIT title container */}
               <div className="min-w-36 h-16 flex items-center justify-center  border-b-2 border-neutral-400">
-                <h3 className="bg-green-600/0 text-center uppercase flex-1 text-2xl">
-                  Habit
-                </h3>
+                <h3 className="text-center uppercase flex-1 text-2xl">Habit</h3>
               </div>
 
-              {/* habit titles */}
+              {/* habit title list */}
               <div className="flex-1 p-[5px] flex flex-col gap-[5px] items-center justify-starts">
                 {aside}
                 <CreateHabitButton onClick={handleCreateHabit} />
@@ -93,7 +84,6 @@ const Tracker: React.FC<TrackerProps> = ({
               </div>
 
               {/* checkbox tiles */}
-
               <div className="bg-white flex flex-col gap-[5px] p-[5px]">
                 {content ? content : <ContentSkeleton />}
               </div>
