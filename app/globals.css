@@ -2,32 +2,84 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
-}
-
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  outline: none;
+  border: none;
+}
+
+.custom-checkbox {
+  background-color: #c74949;
+}
+
+::-webkit-scrollbar {
+  width: 18px;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-neutral-200 rounded-lg;
+  border: 5px solid white;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-neutral-500 rounded-b-lg;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-white rounded-b-lg;
+}
+
+::-webkit-scrollbar-thumb:window-inactive {
+  @apply bg-neutral-200 rounded-lg;
+  border: 5px solid white;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
   }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+/* Apply the shimmer animation to elements with the .shimmer class */
+.shimmer {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(to right, #f6f7f8 8%, #a0ffc0 18%, #f6f7f8 33%);
+  animation: shimmer 1s infinite linear;
+}
+
+/* Add some styling to improve the effect */
+.shimmer::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -1000px;
+  width: 1000px;
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    #ffffff20 50%,
+    transparent 100%
+  );
 }
