@@ -11,6 +11,7 @@ import { NavTile } from "../../components/Tiles/NavTile";
 import { FaChartLine, FaRegClock, FaStopwatch } from "react-icons/fa";
 import { FaNoteSticky } from "react-icons/fa6";
 import Tracker from "../../components/Tracker/Tracker";
+import Button from "@/components/Buttons/Button";
 const TrackerPage = () => {
   const { selectedMonth, daysOfMonth, titles, habitsToDays, months } =
     useTracker();
@@ -23,30 +24,10 @@ const TrackerPage = () => {
 
   const sidebar = (
     <ul className="flex flex-col gap-1">
-      <NavTile
-        label="Stats"
-        bgColorClass="bg-sky-300"
-        Icon={FaChartLine}
-        iconSize={30}
-      />
-      <NavTile
-        label="Habits"
-        bgColorClass="bg-green-400"
-        Icon={FaRegClock}
-        iconSize={30}
-      />
-      <NavTile
-        label="Notes"
-        bgColorClass="bg-yellow-300"
-        Icon={FaNoteSticky}
-        iconSize={30}
-      />
-      <NavTile
-        label="Deadlines"
-        bgColorClass="bg-rose-400"
-        Icon={FaStopwatch}
-        iconSize={30}
-      />
+      <Button text="Stats" color="sky" Icon={FaChartLine} iconSize={30} />
+      <Button text="Habits" color="green" Icon={FaRegClock} iconSize={30} />
+      <Button text="Notes" color="yellow" Icon={FaNoteSticky} iconSize={30} />
+      <Button text="Deadlines" color="rose" Icon={FaStopwatch} iconSize={30} />
     </ul>
   );
 
