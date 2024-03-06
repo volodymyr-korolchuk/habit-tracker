@@ -2,7 +2,7 @@
 
 import React from "react";
 
-import MonthButton from "./MonthButton";
+import TinyButton from "@/components/Buttons/TinyButton";
 import { useTracker } from "@/app/tracker/context/TrackerContext";
 import { Months } from "@/constants/months";
 
@@ -17,7 +17,7 @@ const MonthsContainer: React.FC = () => {
     <div className="w-full flex gap-2 justify-around">
       {months.map((month, index) => {
         return (
-          <MonthButton
+          <TinyButton
             key={month}
             label={month}
             primary={selectedMonth === index}

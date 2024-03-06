@@ -1,16 +1,12 @@
 "use client";
 
-interface MonthButtonProps {
+interface TinyButtonProps {
   label: string;
   primary?: boolean;
   onClick?: () => void;
 }
 
-const MonthButton: React.FC<MonthButtonProps> = ({
-  label,
-  primary,
-  onClick,
-}) => {
+const TinyButton: React.FC<TinyButtonProps> = ({ label, primary, onClick }) => {
   const classes = `rounded-lg text-center text-neutral-900 w-full h-12 hover:bg-neutral-300 transition ${
     primary ? "font-semibold bg-neutral-100 text-neutral-900 text-[18px]" : ""
   }`;
@@ -22,4 +18,4 @@ const MonthButton: React.FC<MonthButtonProps> = ({
   );
 };
 
-export default MonthButton;
+export default TinyButton;
