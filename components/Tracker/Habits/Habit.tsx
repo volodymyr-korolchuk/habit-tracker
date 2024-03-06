@@ -1,9 +1,9 @@
-interface HabitItemProps {
+interface HabitProps {
   label: string;
   primary?: boolean;
 }
 
-const HabitItem: React.FC<HabitItemProps> = ({ label, primary }) => {
+const Habit: React.FC<HabitProps> = ({ label, primary }) => {
   return (
     <button
       className={`bg-neutral-300 rounded-md text-center text-neutral-800 w-full hover:bg-neutral-100 md:h-16 h-12 px-5 md:text-2xl text-lg overflow-hidden whitespace-nowrap  text-ellipsis${
@@ -15,4 +15,4 @@ const HabitItem: React.FC<HabitItemProps> = ({ label, primary }) => {
   );
 };
 
-export default HabitItem;
+export default Habit;

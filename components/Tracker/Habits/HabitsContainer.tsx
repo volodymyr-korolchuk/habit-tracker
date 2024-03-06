@@ -2,14 +2,17 @@
 
 import React, { useState } from "react";
 import { FaPlus } from "react-icons/fa";
-import CreateHabitButton from "../../Buttons/CreateHabitButton";
+
+import Button from "@/components/Buttons/Button";
 
 interface HabitsContainerProps {
   children: React.ReactNode | React.ReactNode[];
 }
 
 const HabitsContainer: React.FC<HabitsContainerProps> = ({ children }) => {
-  const handleCreateHabit = () => {};
+  const handleCreateHabit = () => {
+    console.log("clicked");
+  };
 
   return (
     <div className="flex flex-col justify-start border-neutral-400 border-r-2">
@@ -24,9 +27,6 @@ const HabitsContainer: React.FC<HabitsContainerProps> = ({ children }) => {
       <div className="bg-white p-[5px] border-t-2 border-neutral-400">
         {children}
       </div>
-
-      {/* Create new habit button */}
-      <CreateHabitButton onClick={handleCreateHabit} />
     </div>
   );
 };

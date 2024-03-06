@@ -2,28 +2,37 @@
 
 import { MouseEventHandler } from "react";
 import { cn } from "@/utils/cn";
+import { IconType } from "react-icons/lib";
 
 interface ButtonProps {
   text?: string;
+  Icon?: IconType;
+  iconSize?: number;
+  expandOnHover?: boolean;
   onClick?: MouseEventHandler<HTMLButtonElement>;
-  color?: "green" | "red" | "sky" | "dark" | "white";
-  colorIntensity?: 300 | 400 | 600;
+  color?: "green" | "rose" | "sky" | "yellow";
 }
 
 const Button: React.FC<ButtonProps> = ({
   text,
+  color = "green",
+  expandOnHover = false,
   onClick,
-  color = "white",
-  colorIntensity = 300,
+  Icon,
+  iconSize = 25,
 }) => {
-  const classes = cn(
-    "rounded-lg text-center text-neutral-900 w-full h-12 transition",
-    `bg-${color}-${colorIntensity}`
+  const buttonClasses = cn(
+    "inline-block rounded-lg text-center text-neutral-900 w-full h-12 transition group flex items-center justify-center",
+    `bg-${color}-400 hover:bg-${color}-300`
   );
 
+  const contentClasses = expandOnHover
+    ? "group-hover:scale-110 transition-transform"
+    : "";
+
   return (
-    <button onClick={onClick} className={classes}>
-      {text}
+    <button onClick={onClick} className={buttonClasses}>
+      {Icon ? <Icon size={iconSize} className={contentClasses} /> : text}
     </button>
   );
 };

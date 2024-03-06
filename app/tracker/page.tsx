@@ -4,7 +4,7 @@ import React from "react";
 import Image from "next/image";
 import { useTracker } from "./context/TrackerContext";
 import MonthsContainer from "../../components/Tracker/Months/MonthsContainer";
-import HabitItem from "../../components/Tracker/Habits/HabitItem";
+import HabitItem from "../../components/Tracker/Habits/Habit";
 import NumberTile from "../../components/Tiles/NumberTile";
 import CheckboxContainer from "../../components/Checkbox/CheckboxContainer";
 import { NavTile } from "../../components/Tiles/NavTile";

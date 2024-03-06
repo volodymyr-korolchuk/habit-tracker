@@ -1,11 +1,11 @@
 "use client";
 
 import React, { Suspense, useState, ReactNode } from "react";
-import { FaGripLines } from "react-icons/fa";
+import { FaGripLines, FaPlus } from "react-icons/fa";
 import { FaXmark } from "react-icons/fa6";
-import CreateHabitButton from "../Buttons/CreateHabitButton";
 import DaysOfMonthSkeleton from "../Skeletons/DaysOfMonthSkeleton";
 import ContentSkeleton from "../Skeletons/ContentSkeleton";
+import Button from "../Buttons/Button";
 
 interface TrackerProps {
   header?: ReactNode | ReactNode[];
@@ -45,7 +45,9 @@ const Tracker: React.FC<TrackerProps> = ({
   sidebar,
   daysOfMonth,
 }) => {
-  const handleCreateHabit = () => {};
+  const handleCreateHabit = () => {
+    console.log("create habit called");
+  };
 
   return (
     <>
@@ -73,7 +75,12 @@ const Tracker: React.FC<TrackerProps> = ({
               {/* habit title list */}
               <div className="flex-1 p-[5px] flex flex-col gap-[5px] items-center justify-starts">
                 {aside}
-                <CreateHabitButton onClick={handleCreateHabit} />
+                <Button
+                  Icon={FaPlus}
+                  color="green"
+                  onClick={handleCreateHabit}
+                  expandOnHover
+                />
               </div>
             </div>
 
