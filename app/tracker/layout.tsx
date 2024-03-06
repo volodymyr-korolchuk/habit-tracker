@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./../globals.css";
 
 import { TrackerContextProvider } from "./context/TrackerContext";
+import { Toaster } from "react-hot-toast";
 
 export const metadata: Metadata = {
   title: "Habit Tracker",
@@ -13,5 +14,10 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <TrackerContextProvider>{children}</TrackerContextProvider>;
+  return (
+    <>
+      <Toaster />
+      <TrackerContextProvider>{children}</TrackerContextProvider>;
+    </>
+  );
 }

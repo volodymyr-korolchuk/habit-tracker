@@ -1,5 +1,5 @@
-import useModal from "@/hooks/useModal";
 import React, { useState } from "react";
+import toast from "react-hot-toast";
 import { FaXmark } from "react-icons/fa6";
 
 interface Props {
@@ -7,12 +7,32 @@ interface Props {
   onClose: () => void;
 }
 
+const isValidInput = (title: string) => {
+  if (title.length < 1) {
+    toast.error("Title was not provided");
+    return false;
+  }
+};
+
 const CreateHabitModal: React.FC<Props> = ({ isOpened, onClose }) => {
   const [title, setTitle] = useState("");
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // write to the db (through api)
+
+    if (!isValidInput(title)) {
+      return;
+    }
+
+    try {
+      //
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        toast.error(error.message);
+      } else {
+        console.error(error);
+      }
+    }
 
     // cleanup
     setTitle("");
@@ -29,7 +49,7 @@ const CreateHabitModal: React.FC<Props> = ({ isOpened, onClose }) => {
         <section className="flex flex-col items-center justify-center bg-blue-200 border-2 border-neutral-800 rounded-xl p-2 group">
           <div className="w-full text-end flex items-center justify-between pb-2 pl-2">
             <p className="text-4xl">Create a new Habit!</p>
-            <button onClick={onClose} className="hover:bg-rose-500 rounded-md">
+            <button onClick={onClose} className="hover:bg-rose-400 rounded-md">
               <FaXmark size={45} />
             </button>
           </div>
