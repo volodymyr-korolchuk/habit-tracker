@@ -5,7 +5,7 @@ import { MouseEventHandler } from "react";
 import { cn } from "@/utils/cn";
 import { IconType } from "react-icons/lib";
 
-interface ButtonProps {
+interface Props {
   text?: string;
   Icon?: IconType;
   iconSize?: number;
@@ -15,7 +15,7 @@ interface ButtonProps {
   color?: "green" | "rose" | "sky" | "yellow";
 }
 
-const Button: React.FC<ButtonProps> = ({
+const Button: React.FC<Props> = ({
   text,
   color = "green",
   expandOnHover = true,

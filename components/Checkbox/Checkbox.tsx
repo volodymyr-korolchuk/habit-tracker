@@ -5,12 +5,12 @@ import { useState } from "react";
 import { IoClose } from "react-icons/io5";
 import { MdDone } from "react-icons/md";
 
-interface CheckboxProps {
+interface Props {
   checked: boolean;
   onChange?: () => void;
 }
 
-const Checkbox: React.FC<CheckboxProps> = ({ checked, onChange }) => {
+const Checkbox: React.FC<Props> = ({ checked, onChange }) => {
   const [isChecked, setIsChecked] = useState(checked);
 
   const classes = `

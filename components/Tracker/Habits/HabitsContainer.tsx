@@ -2,11 +2,11 @@
 
 import React from "react";
 
-interface HabitsContainerProps {
+interface Props {
   children: React.ReactNode | React.ReactNode[];
 }
 
-const HabitsContainer: React.FC<HabitsContainerProps> = ({ children }) => {
+const HabitsContainer: React.FC<Props> = ({ children }) => {
   const handleCreateHabit = () => {
     console.log("clicked");
   };

@@ -4,12 +4,12 @@ import Checkbox from "./Checkbox";
 import { useTracker } from "@/app/tracker/context/TrackerContext";
 import { Months } from "@/constants/months";
 
-interface CheckboxContainerProps {
+interface Props {
   month?: Months;
   checkedDaysIndexes: number[];
 }
 
-const CheckboxContainer: React.FC<CheckboxContainerProps> = ({
+const CheckboxContainer: React.FC<Props> = ({
   checkedDaysIndexes,
 }) => {
   const { selectedMonth } = useTracker();

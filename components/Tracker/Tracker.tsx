@@ -9,7 +9,7 @@ import DaysOfMonthSkeleton from "../Skeletons/DaysOfMonthSkeleton";
 import ContentSkeleton from "../Skeletons/ContentSkeleton";
 import Button from "../Buttons/Button";
 
-interface TrackerProps {
+interface Props {
   header?: ReactNode | ReactNode[];
   aside?: ReactNode | ReactNode[];
   sidebar?: ReactNode | ReactNode[];
@@ -40,7 +40,7 @@ const Sidebar = ({ children }: { children?: ReactNode | ReactNode[] }) => {
   );
 };
 
-const Tracker: React.FC<TrackerProps> = ({
+const Tracker: React.FC<Props> = ({
   header,
   aside,
   content,
