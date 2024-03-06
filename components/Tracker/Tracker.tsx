@@ -8,6 +8,7 @@ import { FaXmark } from "react-icons/fa6";
 import DaysOfMonthSkeleton from "../Skeletons/DaysOfMonthSkeleton";
 import ContentSkeleton from "../Skeletons/ContentSkeleton";
 import Button from "../Buttons/Button";
+import useModal from "@/hooks/useModal";
 
 interface Props {
   header?: ReactNode | ReactNode[];
@@ -15,6 +16,7 @@ interface Props {
   sidebar?: ReactNode | ReactNode[];
   content?: ReactNode | ReactNode[];
   daysOfMonth?: ReactNode | ReactNode[];
+  openModal: () => void;
 }
 
 const Sidebar = ({ children }: { children?: ReactNode | ReactNode[] }) => {
@@ -46,14 +48,15 @@ const Tracker: React.FC<Props> = ({
   content,
   sidebar,
   daysOfMonth,
+  openModal,
 }) => {
   const handleCreateHabit = () => {
-    console.log("create habit called");
+    openModal();
   };
 
   return (
     <>
-      <div className="flex flex-col gap-2 w-[90%] h-[80%] bg-gradient-to-br from-sky-200/30 to-neutral-100/20 border-[1px] border-white/40 backdrop-blur-sm rounded-xl p-2 z-10">
+      <div className="flex flex-col gap-2 w-[90%] h-[80%] bg-gradient-to-br from-sky-200/30 to-neutral-100/20 border-[1px] border-white/40 backdrop-blur-sm rounded-xl p-2">
         {/* header */}
         <div className="w-full rounded-md flex items-center jusify-center overflow-y-auto">
           {header}

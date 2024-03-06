@@ -9,13 +9,17 @@ import { FaChartLine, FaRegClock, FaStopwatch } from "react-icons/fa";
 
 import CheckboxContainer from "../../components/Checkbox/CheckboxContainer";
 import MonthsContainer from "../../components/Tracker/Months/MonthsContainer";
-import HabitItem from "../../components/Tracker/Habits/Habit";
+import Habit from "../../components/Tracker/Habits/Habit";
 import Tracker from "../../components/Tracker/Tracker";
 import Button from "@/components/Buttons/Button";
+import CreateHabitModal from "@/components/Modals/CreateHabitModal";
+import useModal from "@/hooks/useModal";
 
 const TrackerPage = () => {
   const { selectedMonth, daysOfMonth, titles, habitsToDays, months } =
     useTracker();
+
+  const { isOpened, openModal, closeModal } = useModal();
 
   let habitsCheckedDaysArrays = habitsToDays
     ? [...habitsToDays.values()]
@@ -35,7 +39,7 @@ const TrackerPage = () => {
   const aside = (
     <>
       {titles.map((title) => (
-        <HabitItem key={title} label={title} />
+        <Habit key={title} label={title} />
       ))}
     </>
   );
@@ -65,6 +69,7 @@ const TrackerPage = () => {
         className="absolute z-0 object-cover w-full h-full"
         alt="leafs background"
       />
+      <CreateHabitModal isOpened={isOpened} onClose={closeModal} />
       <div className="flex items-center justify-center w-full h-full">
         <Tracker
           header={header}
@@ -72,6 +77,7 @@ const TrackerPage = () => {
           content={content}
           sidebar={sidebar}
           daysOfMonth={daysOfMonthArray}
+          openModal={openModal}
         />
       </div>
     </div>
