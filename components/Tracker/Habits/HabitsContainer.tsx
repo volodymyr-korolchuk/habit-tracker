@@ -1,9 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
-import { FaPlus } from "react-icons/fa";
-
-import Button from "@/components/Buttons/Button";
+import React from "react";
 
 interface HabitsContainerProps {
   children: React.ReactNode | React.ReactNode[];

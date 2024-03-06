@@ -2,16 +2,17 @@
 
 import React from "react";
 import Image from "next/image";
+
 import { useTracker } from "./context/TrackerContext";
+import { FaNoteSticky } from "react-icons/fa6";
+import { FaChartLine, FaRegClock, FaStopwatch } from "react-icons/fa";
+
+import CheckboxContainer from "../../components/Checkbox/CheckboxContainer";
 import MonthsContainer from "../../components/Tracker/Months/MonthsContainer";
 import HabitItem from "../../components/Tracker/Habits/Habit";
-import NumberTile from "../../components/Tiles/NumberTile";
-import CheckboxContainer from "../../components/Checkbox/CheckboxContainer";
-import { NavTile } from "../../components/Tiles/NavTile";
-import { FaChartLine, FaRegClock, FaStopwatch } from "react-icons/fa";
-import { FaNoteSticky } from "react-icons/fa6";
 import Tracker from "../../components/Tracker/Tracker";
 import Button from "@/components/Buttons/Button";
+
 const TrackerPage = () => {
   const { selectedMonth, daysOfMonth, titles, habitsToDays, months } =
     useTracker();

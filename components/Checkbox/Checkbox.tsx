@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { IoClose } from "react-icons/io5";
 
+import { IoClose } from "react-icons/io5";
 import { MdDone } from "react-icons/md";
 
 interface CheckboxProps {

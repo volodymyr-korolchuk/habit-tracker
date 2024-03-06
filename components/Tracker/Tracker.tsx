@@ -1,8 +1,10 @@
 "use client";
 
-import React, { Suspense, useState, ReactNode } from "react";
+import React, { useState, ReactNode } from "react";
+
 import { FaGripLines, FaPlus } from "react-icons/fa";
 import { FaXmark } from "react-icons/fa6";
+
 import DaysOfMonthSkeleton from "../Skeletons/DaysOfMonthSkeleton";
 import ContentSkeleton from "../Skeletons/ContentSkeleton";
 import Button from "../Buttons/Button";
