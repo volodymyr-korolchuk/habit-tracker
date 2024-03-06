@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { FaPlus } from "react-icons/fa";
-import CreateHabitButton from "../Controls/Buttons/CreateHabitButton";
+import CreateHabitButton from "../../Buttons/CreateHabitButton";
 
 interface HabitsContainerProps {
   children: React.ReactNode | React.ReactNode[];

@@ -1,17 +1,15 @@
 "use client";
 
 import {
-  Dispatch,
   ReactNode,
-  SetStateAction,
   createContext,
   useContext,
   useEffect,
   useState,
 } from "react";
+
 import { Months } from "../../../constants/months";
 import { parseToMap } from "../../../libs/dataParser";
-import { fetchedHabitsData } from "@/data/mockFecth";
 import { getDaysInMonth } from "@/libs/dateUtils";
 
 interface TrackerContextType {
@@ -46,16 +44,19 @@ export function TrackerContextProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     const fetchHabits = async () => {
       try {
+        // change later to fetch the habits of a certain user
         const response = await fetch("/api/habits");
 
         if (!response.ok) {
-          console.log("error in TrackerContext");
+          console.log("Response was not OK in in TrackerContext");
           return;
         }
 
         const data = await response.json();
         setHabitsToDays(parseToMap(data));
-      } catch (error) {}
+      } catch (error) {
+        console.log(error);
+      }
     };
 
     fetchHabits();

@@ -65,7 +65,7 @@ input[type="checkbox"] {
   position: relative;
   overflow: hidden;
   background: linear-gradient(to right, #f6f7f8 8%, #a0ffc0 18%, #f6f7f8 33%);
-  animation: shimmer 1s infinite linear;
+  animation: shimmer 2s infinite linear;
 }
 
 /* Add some styling to improve the effect */

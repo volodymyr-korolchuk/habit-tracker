@@ -159,3 +159,16 @@ export const fetchedHabitsData = [
     ],
   },
 ];
+
+const user = {
+  id: "userId",
+  habits: ["habitID", "habitID", "habitID", "habitID"],
+};
+
+const habits = [
+  {
+    id: "habitId",
+    title: "habit title",
+    keptOnDates: [],
+  },
+];

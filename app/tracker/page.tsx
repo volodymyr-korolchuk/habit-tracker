@@ -3,14 +3,14 @@
 import React from "react";
 import Image from "next/image";
 import { useTracker } from "./context/TrackerContext";
-import MonthsContainer from "./components/Months/MonthsContainer";
-import HabitItem from "./components/Habits/HabitItem";
-import NumberTile from "./components/Controls/Tiles/NumberTile";
-import CheckboxContainer from "./components/Controls/Checkbox/CheckboxContainer";
-import { NavTile } from "./components/Controls/Tiles/NavTile";
+import MonthsContainer from "../../components/Tracker/Months/MonthsContainer";
+import HabitItem from "../../components/Tracker/Habits/HabitItem";
+import NumberTile from "../../components/Tiles/NumberTile";
+import CheckboxContainer from "../../components/Checkbox/CheckboxContainer";
+import { NavTile } from "../../components/Tiles/NavTile";
 import { FaChartLine, FaRegClock, FaStopwatch } from "react-icons/fa";
 import { FaNoteSticky } from "react-icons/fa6";
-import Tracker from "./components/Tracker/Tracker";
+import Tracker from "../../components/Tracker/Tracker";
 const TrackerPage = () => {
   const { selectedMonth, daysOfMonth, titles, habitsToDays, months } =
     useTracker();

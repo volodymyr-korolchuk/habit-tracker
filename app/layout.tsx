@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Afacad } from "next/font/google";
 import "./globals.css";
-import { TrackerContextProvider } from "./tracker/context/TrackerContext";
 
 const font = Afacad({ weight: ["400", "500", "600"], subsets: ["latin"] });
 

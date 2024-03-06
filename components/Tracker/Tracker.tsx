@@ -3,7 +3,7 @@
 import React, { Suspense, useState, ReactNode } from "react";
 import { FaGripLines } from "react-icons/fa";
 import { FaXmark } from "react-icons/fa6";
-import CreateHabitButton from "../Controls/Buttons/CreateHabitButton";
+import CreateHabitButton from "../Buttons/CreateHabitButton";
 import DaysOfMonthSkeleton from "../Skeletons/DaysOfMonthSkeleton";
 import ContentSkeleton from "../Skeletons/ContentSkeleton";
 

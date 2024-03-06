@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { IoClose } from "react-icons/io5";
+
 import { MdDone } from "react-icons/md";
 
 interface CheckboxProps {
@@ -12,10 +14,10 @@ const Checkbox: React.FC<CheckboxProps> = ({ checked, onChange }) => {
   const [isChecked, setIsChecked] = useState(checked);
 
   const classes = `
-    flex absolute z-10 top-0 h-full w-full items-center rounded-lg justify-center 
+    flex absolute z-10 top-0 h-full w-full items-center rounded-lg justify-center transition hover:outline-dashed outline-2 -outline-offset-2
     ${
       checked
-        ? "bg-green-400 hover:bg-neutral-400"
+        ? "bg-green-400 hover:bg-rose-400"
         : "bg-neutral-400 hover:bg-neutral-200"
     }
   `;
@@ -25,9 +27,17 @@ const Checkbox: React.FC<CheckboxProps> = ({ checked, onChange }) => {
   };
 
   return (
-    <div className="relative md:w-16 w-12 md:h-16 h-12 outline-none">
+    <div className="relative md:w-16 w-12 md:h-16 h-12 outline-none group">
       <div className={classes} onClick={handleChecked}>
-        {checked && <MdDone size={40} />}
+        {checked && (
+          <>
+            <MdDone className="transition group-hover:hidden" size={40} />
+            <IoClose
+              className="transition group-hover:block hidden"
+              size={40}
+            />
+          </>
+        )}
       </div>
     </div>
   );
