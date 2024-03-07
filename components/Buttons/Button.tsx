@@ -11,10 +11,12 @@ interface Props {
   borderEnabled?: boolean;
   onClick?: MouseEventHandler<HTMLButtonElement>;
   color?: "green" | "rose" | "sky" | "yellow";
+  type?: "button" | "reset" | "submit";
 }
 
 const Button: React.FC<Props> = ({
   text,
+  type,
   color = "green",
   expandOnHover = true,
   borderEnabled,
