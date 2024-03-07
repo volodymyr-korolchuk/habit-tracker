@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 
 interface Props {
@@ -15,7 +17,7 @@ const Navbar: React.FC<Props> = ({ activePage }) => {
         <Link
           href="/login"
           className={`text-xl cursor-pointer ${
-            activePage === "login" ? activeLinkClasses : unactiveLinkClasses
+            activePage === "/login" ? activeLinkClasses : unactiveLinkClasses
           }`}
         >
           Log In
@@ -23,7 +25,7 @@ const Navbar: React.FC<Props> = ({ activePage }) => {
         <Link
           href="/signup"
           className={`text-xl cursor-pointer ${
-            activePage === "signup" ? activeLinkClasses : unactiveLinkClasses
+            activePage === "/signup" ? activeLinkClasses : unactiveLinkClasses
           }`}
         >
           Sign Up

@@ -1,9 +1,9 @@
 import { FormEvent, useState } from "react";
-import TextInput from "@/components/Input/TextInput";
-import Button from "../Buttons/Button";
 import toast from "react-hot-toast";
 
-type Props = {};
+import TextInput from "@/components/Input/TextInput";
+import Button from "../Buttons/Button";
+import Link from "next/link";
 
 const isValidInput = (username: string, password: string) => {
   if (username.length < 1) {
@@ -19,7 +19,7 @@ const isValidInput = (username: string, password: string) => {
   return true;
 };
 
-const LoginForm = (props: Props) => {
+const LoginForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -32,27 +32,36 @@ const LoginForm = (props: Props) => {
   };
 
   return (
-    <form
-      className="flex flex-col items-center justify-center rounded-lg gap-2"
-      onSubmit={handleSubmit}
-    >
-      <TextInput
-        type="text"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-        maxLength={20}
-        placeholder="Username"
-      />
-      <TextInput
-        type="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        placeholder="Password"
-        maxLength={20}
-      />
+    <>
+      <form
+        className="flex flex-col items-center justify-center rounded-lg gap-3"
+        onSubmit={handleSubmit}
+      >
+        <TextInput
+          type="text"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          maxLength={20}
+          placeholder="Username"
+        />
+        <TextInput
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder="Password"
+          maxLength={20}
+        />
 
-      <Button type="submit" text="Log In" />
-    </form>
+        <Button type="submit" text="Log In" />
+      </form>
+
+      <p className="text-left w-full px-2">
+        Haven't registered yet?{" "}
+        <Link href="/signup">
+          <strong>Sign Up</strong>
+        </Link>
+      </p>
+    </>
   );
 };
 
