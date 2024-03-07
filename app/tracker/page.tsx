@@ -56,6 +56,7 @@ const TrackerPage = () => {
         height={1080}
         src="/images/leafs-bg.jpg"
         className="absolute z-0 object-cover w-full h-full"
+        loading="eager"
         alt="leafs background"
       />
       <CreateHabitModal isOpened={isOpened} onClose={closeModal} />

@@ -1,27 +1,37 @@
 import { FormEvent, useState } from "react";
+import Link from "next/link";
+
 import toast from "react-hot-toast";
 
 import TextInput from "@/components/Input/TextInput";
 import Button from "../Buttons/Button";
-import Link from "next/link";
-import { validateLoginForm } from "@/libs/validators";
+import { validateSignupForm } from "@/libs/validators";
 
-const LoginForm = () => {
+const SignupForm = () => {
   const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const check = validateLoginForm(username, password);
+    const check = validateSignupForm(
+      username,
+      email,
+      password,
+      confirmPassword
+    );
 
-    if (!check.valid) {
+    if (!check?.valid) {
       toast.error(check.message);
       return;
     }
 
     setUsername("");
+    setEmail("");
     setPassword("");
+    setConfirmPassword("");
   };
 
   return (
@@ -38,24 +48,37 @@ const LoginForm = () => {
           placeholder="Username"
         />
         <TextInput
+          type="text"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="Email"
+        />
+        <TextInput
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Password"
-          maxLength={20}
+          maxLength={28}
+        />
+        <TextInput
+          type="password"
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+          placeholder="Confirm password"
+          maxLength={28}
         />
 
-        <Button type="submit" text="Log In" />
+        <Button type="submit" text="Sign Up" />
       </form>
 
       <p className="text-left w-full px-2">
-        Haven't registered yet?{" "}
-        <Link href="/signup">
-          <strong>Sign Up</strong>
+        Already have an account?{" "}
+        <Link href="/login">
+          <strong>Log In</strong>
         </Link>
       </p>
     </>
   );
 };
 
-export default LoginForm;
+export default SignupForm;

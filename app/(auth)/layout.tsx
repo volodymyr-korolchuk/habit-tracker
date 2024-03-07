@@ -71,12 +71,13 @@ export default function AuthLayout({
   console.log(path);
 
   return (
-    <div>
+    <>
       <Toaster />
-
       <div className="w-full relative h-screen flex flex-col bg-sky-100">
         {background}
-        <Navbar activePage={path} />
+        <header>
+          <Navbar activePage={path} />
+        </header>
 
         {/* Form */}
         <div className="flex-1 z-10 flex items-center justify-center">
@@ -98,6 +99,6 @@ export default function AuthLayout({
           </Link>
         </footer>
       </div>
-    </div>
+    </>
   );
 }
