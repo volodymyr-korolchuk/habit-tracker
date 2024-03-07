@@ -13,7 +13,7 @@ export async function POST(req: NextRequest) {
     if (!userId || !title) {
       return NextResponse.json(
         { error: "Habit data was not provided" },
-        { status: 403 }
+        { status: 400 }
       );
     }
 
@@ -22,17 +22,16 @@ export async function POST(req: NextRequest) {
     if (!isUserExists) {
       return NextResponse.json(
         { error: "User does not exist" },
-        { status: 403 }
+        { status: 404 }
       );
     }
 
     const isHabitExists = await Habit.findOne({ title });
 
     if (isHabitExists) {
-      return NextResponse.json(
-        { error: "Habit with such name already exists" },
-        { status: 403 }
-      );
+      return NextResponse.json({
+        error: "Habit with such name already exists",
+      });
     }
 
     const newHabit = new Habit({ owner: userId, title: title });
