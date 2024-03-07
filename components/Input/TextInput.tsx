@@ -1,5 +1,3 @@
-"use client";
-
 import { ChangeEventHandler } from "react";
 
 interface Props {

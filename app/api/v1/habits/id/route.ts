@@ -1,6 +1,5 @@
 import Habit from "@/models/Habit";
 import { connectToDB } from "@/utils/database.js";
-import { useSearchParams } from "next/navigation";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {

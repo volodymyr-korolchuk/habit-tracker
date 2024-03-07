@@ -21,9 +21,7 @@ const TrackerPage = () => {
 
   const { isOpened, openModal, closeModal } = useModal();
 
-  let habitsCheckedDaysArrays = habitsToDays
-    ? [...habitsToDays.values()]
-    : null;
+  let habitsCheckedDaysArrays = habitsToDays ? [...habitsToDays.values()] : [];
 
   const header = <MonthsContainer />;
 

@@ -1,5 +1,3 @@
-"use client";
-
 import { useState } from "react";
 
 import { IoClose } from "react-icons/io5";

@@ -1,5 +1,3 @@
-"use client";
-
 import { useState } from "react";
 import TextInput from "@/components/Input/TextInput";
 
@@ -27,6 +25,7 @@ const LoginForm = (props: Props) => {
         maxLength={20}
       />
 
+      {/* TODO replace with component */}
       <button className="bg-green-400 hover:bg-green-500 transition-colors w-full h-14 text-2xl rounded-md">
         Log In
       </button>

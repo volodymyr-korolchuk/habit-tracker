@@ -79,7 +79,7 @@ const Login: React.FC<Props> = () => {
   return (
     <div className="w-full relative h-screen flex flex-col bg-sky-100">
       {background}
-      <Navbar />
+      <Navbar activePage="login" />
 
       <div className="flex-1 z-10 flex items-center justify-center">
         <section className="flex flex-col items-center justify-center gap-5 p-4 rounded-lg backdrop-blur-xl bg-neutral-400/40 border-2 border-neutral-700">
