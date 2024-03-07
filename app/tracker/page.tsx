@@ -36,29 +36,20 @@ const TrackerPage = () => {
     </ul>
   );
 
-  const aside = (
-    <>
-      {titles.map((title) => (
-        <Habit key={title} label={title} />
-      ))}
-    </>
-  );
+  const aside = titles.map((title) => <Habit key={title} label={title} />);
 
-  const daysOfMonthArray = (
-    <>
-      {daysOfMonth.map((item, index) => (
-        <div className="flex items-center justify-center md:w-16 w-12 md:h-full h-12 bg-neutral-300 rounded-sm text-[30px]">
-          <p>{index + 1}</p>
-        </div>
-      ))}
-    </>
-  );
+  const daysOfMonthArray = daysOfMonth.map((item, index) => (
+    <div
+      key={item}
+      className="flex items-center justify-center md:w-16 w-12 md:h-full h-12 bg-neutral-300 rounded-sm text-[30px]"
+    >
+      <p>{index + 1}</p>
+    </div>
+  ));
 
-  const content = habitsCheckedDaysArrays?.map((row, index) => {
-    return (
-      <CheckboxContainer key={index} checkedDaysIndexes={row[selectedMonth]} />
-    );
-  });
+  const content = habitsCheckedDaysArrays?.map((row, index) => (
+    <CheckboxContainer key={index} checkedDaysIndexes={row[selectedMonth]} />
+  ));
 
   return (
     <div className="relative flex w-full h-full items-center justify-center">

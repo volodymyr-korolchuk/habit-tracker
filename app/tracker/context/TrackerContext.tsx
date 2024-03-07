@@ -47,13 +47,14 @@ export function TrackerContextProvider({ children }: { children: ReactNode }) {
         // change later to fetch the habits of a certain user
         const response = await fetch("/api/habits");
 
-        if (!response.ok) {
+        if (response.status !== 200) {
           console.log("Response was not OK in in TrackerContext");
           return;
         }
 
         const data = await response.json();
-        setHabitsToDays(parseToMap(data));
+        setHabitsToDays(new Map());
+        //setHabitsToDays(parseToMap(data));
       } catch (error) {
         console.log(error);
       }
