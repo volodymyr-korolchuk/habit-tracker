@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 import { FaXmark } from "react-icons/fa6";
+import TextInput from "../Input/TextInput";
 
 interface Props {
   isOpened: boolean;
@@ -59,14 +60,14 @@ const CreateHabitModal: React.FC<Props> = ({ isOpened, onClose }) => {
             className="flex gap-2"
             onSubmit={handleSubmit}
           >
-            <input
+            <TextInput
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder="Title"
-              className="h-14 w-80 px-4 text-2xl rounded-md"
               maxLength={20}
             />
+
             <button
               form="new-habit-form"
               type="submit"
