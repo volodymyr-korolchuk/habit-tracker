@@ -41,7 +41,7 @@ export const validateLoginForm = (props: ValidateLoginFormProps) => {
 };
 
 export const validateSignupForm = (props: ValidateSugnupFormProps) => {
-  const { password, confirmPassword } = props;
+  const { email, password, confirmPassword } = props;
 
   const fields = Object.entries(props);
 
@@ -56,6 +56,10 @@ export const validateSignupForm = (props: ValidateSugnupFormProps) => {
         message: `${fieldName} is required`,
       };
     }
+  }
+
+  if (!isValidEmail(email)) {
+    return { valid: false, message: "Email is not valid" };
   }
 
   if (!isValidPassword(password)) {
