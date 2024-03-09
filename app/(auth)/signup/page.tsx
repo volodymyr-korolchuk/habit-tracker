@@ -4,7 +4,7 @@ import React from "react";
 import SignupForm from "@/components/Forms/SignupForm";
 import { getGretting } from "@/utils/getGreeting";
 
-type Props = {};
+interface Props {}
 
 const Signup = (props: Props) => {
   const greeting = getGretting();

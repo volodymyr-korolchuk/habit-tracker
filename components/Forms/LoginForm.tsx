@@ -13,7 +13,7 @@ const LoginForm = () => {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const check = validateLoginForm(username, password);
+    const check = validateLoginForm({ username, password });
 
     if (!check.valid) {
       toast.error(check.message);

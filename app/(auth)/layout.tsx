@@ -1,10 +1,12 @@
 "use client";
 
-import Navbar from "@/components/Navigation/Navbar";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
+
 import { Toaster } from "react-hot-toast";
 import { FaGithub } from "react-icons/fa6";
+
+import Navbar from "@/components/Navigation/Navbar";
 
 export default function AuthLayout({
   children,
@@ -80,9 +82,9 @@ export default function AuthLayout({
         </header>
 
         {/* Form */}
-        <div className="flex-1 z-10 flex items-center justify-center">
+        <main className="flex-1 z-10 flex items-center justify-center">
           {children}
-        </div>
+        </main>
 
         <footer className="w-full z-10 flex gap-2 items-center justify-center p-2">
           <p className="text-neutral-600">

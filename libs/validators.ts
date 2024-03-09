@@ -1,54 +1,64 @@
-import toast from "react-hot-toast";
+interface ValidateLoginFormProps {
+  username: string;
+  password: string;
+}
 
-export const EMAIL_REGEX = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-export const PASSWORD_REGEX = /^(?=.*[0-9])(?=.*[A-Za-z])(?!.* ).{8,16}$/;
+interface ValidateSugnupFormProps {
+  username: string;
+  password: string;
+  email: string;
+  confirmPassword: string;
+}
 
-export const validateEmail = (email: string) => {
+const EMAIL_REGEX = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+const PASSWORD_REGEX = /^(?=.*[0-9])(?=.*[A-Za-z])(?!.* ).{8,16}$/;
+
+const isValidEmail = (email: string) => {
   return new RegExp(EMAIL_REGEX).test(email);
 };
-export const validatePassword = (password: string) => {
+
+const isValidPasword = (password: string) => {
   return new RegExp(PASSWORD_REGEX).test(password);
 };
 
-export const validateLoginForm = (username: string, password: string) => {
-  if (username.length < 1) {
-    return { valid: false, message: "Username is required" };
-  }
+export const validateLoginForm = (props: ValidateLoginFormProps) => {
+  const fields = Object.entries(props);
 
-  if (password.length < 1) {
-    return { valid: false, message: "Password is required" };
+  // Values presence check
+  for (const entry of fields) {
+    const fieldName = capitalize(entry[0]);
+    const fieldValue = entry[1];
+
+    if (fieldValue.length < 1) {
+      return {
+        valid: false,
+        message: `${fieldName} is required`,
+      };
+    }
   }
 
   return { valid: true, message: "" };
 };
 
-export const validateSignupForm = (
-  username: string,
-  email: string,
-  password: string,
-  confirmPassword: string
-) => {
-  if (username.length < 1) {
-    return { valid: false, message: "Username is required" };
+export const validateSignupForm = (props: ValidateSugnupFormProps) => {
+  const { password, confirmPassword } = props;
+
+  const fields = Object.entries(props);
+
+  // Values presence check
+  for (const entry of fields) {
+    const fieldName = capitalize(entry[0]);
+    const fieldValue = entry[1];
+
+    if (fieldValue.length < 1) {
+      return {
+        valid: false,
+        message: `${fieldName} is required`,
+      };
+    }
   }
 
-  if (password.length < 1) {
-    return { valid: false, message: "Password is required" };
-  }
-
-  if (email.length < 1) {
-    return { valid: false, message: "Email is required" };
-  }
-
-  if (confirmPassword.length < 1) {
-    return { valid: false, message: "Confrim your password" };
-  }
-
-  if (!validateEmail(email)) {
-    return { valid: false, message: "Email is not valid" };
-  }
-
-  if (!validatePassword(password)) {
+  if (!isValidPasword(password)) {
     return {
       valid: false,
       message:
@@ -62,3 +72,6 @@ export const validateSignupForm = (
 
   return { valid: true, message: "" };
 };
+
+const capitalize = (rawName: string) =>
+  rawName[0].toUpperCase() + rawName.substring(1);

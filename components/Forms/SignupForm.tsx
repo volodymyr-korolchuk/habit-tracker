@@ -16,12 +16,12 @@ const SignupForm = () => {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const check = validateSignupForm(
+    const check = validateSignupForm({
       username,
       email,
       password,
-      confirmPassword
-    );
+      confirmPassword,
+    });
 
     if (!check?.valid) {
       toast.error(check.message);
