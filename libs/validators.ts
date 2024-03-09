@@ -17,7 +17,7 @@ const isValidEmail = (email: string) => {
   return new RegExp(EMAIL_REGEX).test(email);
 };
 
-const isValidPasword = (password: string) => {
+const isValidPassword = (password: string) => {
   return new RegExp(PASSWORD_REGEX).test(password);
 };
 
@@ -58,7 +58,7 @@ export const validateSignupForm = (props: ValidateSugnupFormProps) => {
     }
   }
 
-  if (!isValidPasword(password)) {
+  if (!isValidPassword(password)) {
     return {
       valid: false,
       message:
