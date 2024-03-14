@@ -37,6 +37,7 @@ const LoginForm = () => {
           maxLength={20}
           placeholder="Username"
         />
+
         <TextInput
           type="password"
           value={password}

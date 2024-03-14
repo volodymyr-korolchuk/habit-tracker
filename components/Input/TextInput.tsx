@@ -1,9 +1,9 @@
 import { ChangeEventHandler } from "react";
 
 interface Props {
+  type?: "text" | "password" | "email" | "search" | "number";
   value: string;
   onChange: ChangeEventHandler<HTMLInputElement>;
-  type?: "text" | "password" | "email" | "search" | "number";
   placeholder?: string;
   maxLength?: number;
 }
