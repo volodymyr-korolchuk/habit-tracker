@@ -1,4 +1,4 @@
-import { getDaysInMonth } from "@/libs/dateUtils";
+import { getDaysInMonth } from "@/lib/dateUtils";
 
 import Checkbox from "./Checkbox";
 import { useTracker } from "@/app/tracker/context/TrackerContext";
@@ -9,9 +9,7 @@ interface Props {
   checkedDaysIndexes: number[];
 }
 
-const CheckboxContainer: React.FC<Props> = ({
-  checkedDaysIndexes,
-}) => {
+const CheckboxContainer: React.FC<Props> = ({ checkedDaysIndexes }) => {
   const { selectedMonth } = useTracker();
 
   const daysInMonth = getDaysInMonth(new Date().getFullYear(), selectedMonth);

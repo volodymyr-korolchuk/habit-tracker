@@ -9,8 +9,8 @@ import {
 } from "react";
 
 import { Months } from "../../../constants/months";
-import { parseToMap } from "../../../libs/dataParser";
-import { getDaysInMonth } from "@/libs/dateUtils";
+import { parseToMap } from "../../../lib/dataParser";
+import { getDaysInMonth } from "@/lib/dateUtils";
 
 interface TrackerContextType {
   selectedMonth: Months;
