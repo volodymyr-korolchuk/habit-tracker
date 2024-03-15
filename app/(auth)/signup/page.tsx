@@ -3,6 +3,7 @@
 import React from "react";
 import SignupForm from "@/components/Forms/SignupForm";
 import { getGretting } from "@/utils/getGreeting";
+import Link from "next/link";
 
 interface Props {}
 
@@ -15,6 +16,13 @@ const Signup = (props: Props) => {
         {greeting}
       </h2>
       <SignupForm />
+
+      <p className="text-left w-full px-2">
+        Already have an account?{" "}
+        <Link href="/login">
+          <strong>Log In</strong>
+        </Link>
+      </p>
     </section>
   );
 };

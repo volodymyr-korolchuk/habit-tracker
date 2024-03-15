@@ -2,6 +2,7 @@
 
 import LoginForm from "@/components/Forms/LoginForm";
 import { getGretting } from "@/utils/getGreeting";
+import Link from "next/link";
 
 const Login: React.FC = () => {
   const greeting = getGretting();
@@ -12,6 +13,12 @@ const Login: React.FC = () => {
         {greeting}
       </h2>
       <LoginForm />
+      <p className="text-left w-full px-2">
+        Haven't registered yet?{" "}
+        <Link href="/signup">
+          <strong>Sign Up</strong>
+        </Link>
+      </p>
     </section>
   );
 };

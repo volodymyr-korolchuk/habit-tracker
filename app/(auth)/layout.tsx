@@ -27,7 +27,7 @@ export default function AuthLayout({
       ></div>
       <div
         key={"1#"}
-        className="animate-[bounce_2s_ease-in-out_infinite] absolute w-48 h-48 bg-sky-400 rounded-full"
+        className="animate-[bounce_2s_ease-in-out_infinite] absolute w-48 h-48 bg-sky-300 rounded-full"
         style={{
           top: "20%",
           left: "20%",
@@ -73,7 +73,7 @@ export default function AuthLayout({
   return (
     <>
       <Toaster />
-      <div className="w-full relative h-screen flex flex-col bg-sky-100">
+      <div className="w-full relative h-screen flex flex-col bg-sky-100 overflow-hidden">
         {background}
         <header>
           <Navbar activePage={path} />

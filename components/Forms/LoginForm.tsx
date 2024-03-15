@@ -41,48 +41,39 @@ const LoginForm = () => {
   };
 
   return (
-    <>
-      <form
-        className="flex flex-col items-center justify-center rounded-lg gap-3 w-full"
-        onSubmit={form.handleSubmit(onSubmit)}
-      >
-        <Input
-          {...form.register("email")}
-          className="h-12 w-full text-xl bg-neutral-100/40"
-          type="email"
-          placeholder="Email"
-          maxLength={20}
-        />
+    <form
+      className="flex flex-col items-center justify-center rounded-lg gap-3 w-full"
+      onSubmit={form.handleSubmit(onSubmit)}
+    >
+      <Input
+        {...form.register("email")}
+        className="h-12 w-full text-xl bg-neutral-100/40"
+        type="email"
+        placeholder="Email"
+        maxLength={20}
+      />
 
-        <Input
-          {...form.register("password")}
-          className="h-12 w-full text-xl bg-neutral-100/40"
-          type="password"
-          placeholder="Password"
-          maxLength={20}
-        />
+      <Input
+        {...form.register("password")}
+        className="h-12 w-full text-xl bg-neutral-100/40"
+        type="password"
+        placeholder="Password"
+        maxLength={20}
+      />
 
-        {Object.keys(form.formState.errors).map((item) => (
-          <p className="bg-rose-400/70 p-1 z-50 font-normal rounded-md px-4">
-            {/*TODO: fix type warning*/}
-            {/* @ts-ignore */}
-            {form.formState.errors[item].message as string}
-          </p>
-        ))}
+      {Object.keys(form.formState.errors).map((item) => (
+        <p className="bg-rose-400/70 p-1 z-50 font-normal rounded-md px-4">
+          {/*TODO: fix type warning*/}
+          {/* @ts-ignore */}
+          {form.formState.errors[item].message as string}
+        </p>
+      ))}
 
-        {/* disable when submitting */}
-        <Button type="submit" className="w-full h-12 text-xl">
-          Log in
-        </Button>
-      </form>
-
-      <p className="text-left w-full px-2">
-        Haven't registered yet?{" "}
-        <Link href="/signup">
-          <strong>Sign Up</strong>
-        </Link>
-      </p>
-    </>
+      {/* disable when submitting */}
+      <Button type="submit" className="w-full h-12 text-xl">
+        Log in
+      </Button>
+    </form>
   );
 };
 
