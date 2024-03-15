@@ -1,6 +1,5 @@
 import { MouseEventHandler } from "react";
 
-import { cn } from "@/utils/cn";
 import { IconType } from "react-icons/lib";
 
 interface Props {
@@ -26,12 +25,12 @@ const Button: React.FC<Props> = ({
 }) => {
   let { colorClass, hoverColorClass } = getColorClasses(color);
 
-  const buttonClasses = cn(
+  const buttonClasses = `
     "inline-block rounded-lg text-center text-neutral-900 w-full h-14 transition group flex items-center justify-center",
-    colorClass,
-    hoverColorClass,
-    borderEnabled && "border-2 border-neutral-700"
-  );
+    ${colorClass},
+    ${hoverColorClass},
+    ${borderEnabled && "border-2 border-neutral-700"}
+  `;
 
   const contentClasses = expandOnHover
     ? "group-hover:scale-110 transition-transform"

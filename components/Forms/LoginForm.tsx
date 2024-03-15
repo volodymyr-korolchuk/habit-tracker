@@ -2,7 +2,8 @@
 
 import * as z from "zod";
 
-import Button from "../Buttons/Button";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import { LoginSchema } from "@/schemas";
 import { login } from "@/actions/login";
@@ -42,18 +43,20 @@ const LoginForm = () => {
   return (
     <>
       <form
-        className="flex flex-col items-center justify-center rounded-lg gap-3"
+        className="flex flex-col items-center justify-center rounded-lg gap-3 w-full"
         onSubmit={form.handleSubmit(onSubmit)}
       >
-        <input
+        <Input
           {...form.register("email")}
-          type="text"
+          className="h-12 w-full text-xl bg-neutral-100/40"
+          type="email"
           placeholder="Email"
           maxLength={20}
         />
 
-        <input
+        <Input
           {...form.register("password")}
+          className="h-12 w-full text-xl bg-neutral-100/40"
           type="password"
           placeholder="Password"
           maxLength={20}
@@ -68,7 +71,9 @@ const LoginForm = () => {
         ))}
 
         {/* disable when submitting */}
-        <Button type="submit" text="Log In" />
+        <Button type="submit" className="w-full h-12 text-xl">
+          Log in
+        </Button>
       </form>
 
       <p className="text-left w-full px-2">

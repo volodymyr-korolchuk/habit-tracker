@@ -11,7 +11,7 @@ import CheckboxContainer from "../../components/Checkbox/CheckboxContainer";
 import MonthsContainer from "../../components/Tracker/Months/MonthsContainer";
 import Habit from "../../components/Tracker/Habits/Habit";
 import Tracker from "../../components/Tracker/Tracker";
-import Button from "@/components/Buttons/Button";
+import { Button } from "@/components/ui/button";
 import CreateHabitModal from "@/components/Modals/CreateHabitModal";
 import useModal from "@/hooks/useModal";
 import { signOut } from "next-auth/react";
@@ -28,10 +28,18 @@ const TrackerPage = () => {
 
   const sidebar = (
     <ul className="flex flex-col gap-1">
-      <Button text="Stats" color="sky" Icon={FaChartLine} iconSize={30} />
-      <Button text="Habits" color="green" Icon={FaRegClock} iconSize={30} />
-      <Button text="Notes" color="yellow" Icon={FaNoteSticky} iconSize={30} />
-      <Button text="Deadlines" color="rose" Icon={FaStopwatch} iconSize={30} />
+      {/*
+      
+      Icon={FaChartLine}
+      Icon={FaRegClock}
+      Icon={FaNoteSticky}
+      Icon={FaStopwatch}
+
+      */}
+      <Button />
+      <Button />
+      <Button />
+      <Button />
     </ul>
   );
 

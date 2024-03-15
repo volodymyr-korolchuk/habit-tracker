@@ -2,10 +2,12 @@ import Link from "next/link";
 
 import * as z from "zod";
 
-import Button from "../Buttons/Button";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+
 import { register } from "@/actions/register";
 import { RegisterSchema } from "@/schemas";
-import { FieldError, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 type FormFields = z.infer<typeof RegisterSchema>;
@@ -41,20 +43,27 @@ const SignupForm = () => {
   return (
     <>
       <form
-        className="flex flex-col items-center justify-center rounded-lg gap-3"
+        className="flex flex-col items-center justify-center rounded-lg gap-3 w-full"
         onSubmit={form.handleSubmit(onSubmit)}
       >
-        <input
+        <Input
           {...form.register("username")}
+          className="h-12 w-full text-xl bg-neutral-100/40"
           type="text"
           placeholder="Username"
           maxLength={20}
         />
 
-        <input {...form.register("email")} type="email" placeholder="Email" />
+        <Input
+          {...form.register("email")}
+          className="h-12 w-full text-xl bg-neutral-100/40"
+          type="email"
+          placeholder="Email"
+        />
 
-        <input
+        <Input
           {...form.register("password")}
+          className="h-12 w-full text-xl bg-neutral-100/40"
           type="password"
           placeholder="Password"
           maxLength={28}
@@ -69,7 +78,9 @@ const SignupForm = () => {
         ))}
 
         {/* disable when submitting */}
-        <Button type="submit" text="Sign Up" />
+        <Button type="submit" className="w-full text-xl h-12">
+          Sign Up
+        </Button>
       </form>
 
       <p className="text-left w-full px-2">

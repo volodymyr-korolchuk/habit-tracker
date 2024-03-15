@@ -7,7 +7,7 @@ import { FaXmark } from "react-icons/fa6";
 
 import DaysOfMonthSkeleton from "../Skeletons/DaysOfMonthSkeleton";
 import ContentSkeleton from "../Skeletons/ContentSkeleton";
-import Button from "../Buttons/Button";
+import { Button } from "@/components/ui/button";
 import useModal from "@/hooks/useModal";
 
 interface Props {
@@ -80,12 +80,8 @@ const Tracker: React.FC<Props> = ({
               {/* habit title list */}
               <div className="flex-1 p-[5px] flex flex-col gap-[5px] items-center justify-starts">
                 {aside}
-                <Button
-                  Icon={FaPlus}
-                  color="green"
-                  onClick={handleCreateHabit}
-                  expandOnHover
-                />
+                {/*Icon={FaPlus}*/}
+                <Button color="green" onClick={handleCreateHabit} />
               </div>
             </div>
 
