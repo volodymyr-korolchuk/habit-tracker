@@ -1,25 +1,26 @@
-import Link from "next/link";
+"use client";
 
 import * as z from "zod";
+import { RegisterSchema } from "@/schemas";
+import { zodResolver } from "@hookform/resolvers/zod";
 
+import { startTransition, useState, useTransition } from "react";
+import { useForm } from "react-hook-form";
+import { register } from "@/actions/register";
+
+import {
+  Form,
+  FormItem,
+  FormLabel,
+  FormField,
+  FormMessage,
+  FormControl,
+} from "../ui/form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
-import { register } from "@/actions/register";
-import { RegisterSchema } from "@/schemas";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "../ui/form";
-import { startTransition, useState, useTransition } from "react";
-import { FormError } from "./FormError";
-import { FormSuccess } from "./FormSuccess";
+import { FormError } from "@/components/Forms/FormError";
+import { FormSuccess } from "@/components/Forms/FormSuccess";
 
 type FormFields = z.infer<typeof RegisterSchema>;
 
