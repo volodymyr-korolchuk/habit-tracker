@@ -1,19 +1,33 @@
 "use client";
 
 import * as z from "zod";
-
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import Link from "next/link";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { LoginSchema } from "@/schemas";
+
+import { startTransition, useState, useTransition } from "react";
+import { useForm } from "react-hook-form";
 import { login } from "@/actions/login";
 
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  Form,
+  FormItem,
+  FormLabel,
+  FormField,
+  FormMessage,
+  FormControl,
+} from "@/components/ui/form";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+
+import { FormError } from "@/components/Forms/FormError";
+import { FormSuccess } from "@/components/Forms/FormSuccess";
 
 type FormFields = z.infer<typeof LoginSchema>;
 
 const LoginForm = () => {
+  const [isPending, setPending] = useTransition();
+  const [error, setError] = useState<string | undefined>("");
+
   const form = useForm<FormFields>({
     resolver: zodResolver(LoginSchema),
     defaultValues: {
@@ -22,58 +36,72 @@ const LoginForm = () => {
     },
   });
 
-  const onSubmit = async (values: FormFields) => {
-    try {
-      await login(values).then((data) => {
-        if (data?.error) {
-          form.setError("root", {
-            message: data.error,
-          });
-        }
+  const onSubmit = (values: FormFields) => {
+    setError("");
+
+    startTransition(() => {
+      login(values).then((data) => {
+        setError(data?.error);
       });
-    } catch (error) {
-      if (error instanceof Error) {
-        form.setError("root", {
-          message: error.message,
-        });
-      }
-    }
+    });
   };
 
   return (
-    <form
-      className="flex flex-col items-center justify-center rounded-lg gap-3 w-full"
-      onSubmit={form.handleSubmit(onSubmit)}
-    >
-      <Input
-        {...form.register("email")}
-        className="h-12 w-full text-xl bg-neutral-100/40"
-        type="email"
-        placeholder="Email"
-        maxLength={20}
-      />
+    <Form {...form}>
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="flex flex-col items-center justify-center rounded-lg gap-3 w-full"
+      >
+        <FormField
+          control={form.control}
+          name="email"
+          render={({ field }) => (
+            <FormItem className="w-full">
+              <FormLabel>Email</FormLabel>
+              <FormControl>
+                <Input
+                  {...field}
+                  className="h-12 w-full text-xl bg-neutral-100/40"
+                  type="email"
+                  placeholder="johndoe@example.com"
+                  disabled={isPending}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
-      <Input
-        {...form.register("password")}
-        className="h-12 w-full text-xl bg-neutral-100/40"
-        type="password"
-        placeholder="Password"
-        maxLength={20}
-      />
+        <FormField
+          control={form.control}
+          name="password"
+          render={({ field }) => (
+            <FormItem className="w-full">
+              <FormLabel>Password</FormLabel>
+              <FormControl>
+                <Input
+                  {...field}
+                  className="h-12 w-full text-xl bg-neutral-100/40"
+                  type="password"
+                  placeholder="******"
+                  disabled={isPending}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
-      {Object.keys(form.formState.errors).map((item) => (
-        <p className="bg-rose-400/70 p-1 z-50 font-normal rounded-md px-4">
-          {/*TODO: fix type warning*/}
-          {/* @ts-ignore */}
-          {form.formState.errors[item].message as string}
-        </p>
-      ))}
-
-      {/* disable when submitting */}
-      <Button type="submit" className="w-full h-12 text-xl">
-        Log in
-      </Button>
-    </form>
+        <FormError message={error} />
+        <Button
+          type="submit"
+          className="w-full h-12 text-xl"
+          disabled={isPending}
+        >
+          Log in
+        </Button>
+      </form>
+    </Form>
   );
 };
 
