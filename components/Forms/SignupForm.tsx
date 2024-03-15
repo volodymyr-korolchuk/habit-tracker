@@ -9,10 +9,25 @@ import { register } from "@/actions/register";
 import { RegisterSchema } from "@/schemas";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "../ui/form";
+import { startTransition, useState, useTransition } from "react";
+import { FormError } from "./FormError";
+import { FormSuccess } from "./FormSuccess";
 
 type FormFields = z.infer<typeof RegisterSchema>;
 
 const SignupForm = () => {
+  const [isPending, setPending] = useTransition();
+  const [error, setError] = useState<string | undefined>("");
+  const [success, setSuccess] = useState<string | undefined>("");
+
   const form = useForm<FormFields>({
     resolver: zodResolver(RegisterSchema),
     defaultValues: {
@@ -22,65 +37,95 @@ const SignupForm = () => {
     },
   });
 
-  const onSubmit = async (values: FormFields) => {
-    try {
-      await register(values).then((data) => {
-        if (data?.error) {
-          form.setError("root", {
-            message: data.error,
-          });
-        }
+  const onSubmit = (values: FormFields) => {
+    setError("");
+    setSuccess("");
+
+    startTransition(() => {
+      register(values).then((data) => {
+        setError(data?.error);
+        setSuccess(data?.succeess);
       });
-    } catch (error) {
-      if (error instanceof Error) {
-        form.setError("root", {
-          message: error.message,
-        });
-      }
-    }
+    });
   };
 
   return (
-    <form
-      className="flex flex-col items-center justify-center rounded-lg gap-3 w-full"
-      onSubmit={form.handleSubmit(onSubmit)}
-    >
-      <Input
-        {...form.register("username")}
-        className="h-12 w-full text-xl bg-neutral-100/40"
-        type="text"
-        placeholder="Username"
-        maxLength={20}
-      />
+    <Form {...form}>
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="flex flex-col items-center justify-center rounded-lg gap-3 w-full"
+      >
+        <FormField
+          control={form.control}
+          name="username"
+          render={({ field }) => (
+            <FormItem className="w-full">
+              <FormLabel>Username</FormLabel>
+              <FormControl>
+                <Input
+                  {...field}
+                  className="h-12 w-full text-xl bg-neutral-100/40"
+                  type="text"
+                  placeholder="johndoe217"
+                  disabled={isPending}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
-      <Input
-        {...form.register("email")}
-        className="h-12 w-full text-xl bg-neutral-100/40"
-        type="email"
-        placeholder="Email"
-      />
+        <FormField
+          control={form.control}
+          name="email"
+          render={({ field }) => (
+            <FormItem className="w-full">
+              <FormLabel>Email</FormLabel>
+              <FormControl>
+                <Input
+                  {...field}
+                  className="h-12 w-full text-xl bg-neutral-100/40"
+                  type="email"
+                  placeholder="johndoe@example.com"
+                  disabled={isPending}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
-      <Input
-        {...form.register("password")}
-        className="h-12 w-full text-xl bg-neutral-100/40"
-        type="password"
-        placeholder="Password"
-        maxLength={28}
-      />
+        <FormField
+          control={form.control}
+          name="password"
+          render={({ field }) => (
+            <FormItem className="w-full">
+              <FormLabel>Password</FormLabel>
+              <FormControl>
+                <Input
+                  {...field}
+                  className="h-12 w-full text-xl bg-neutral-100/40"
+                  type="password"
+                  placeholder="******"
+                  disabled={isPending}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
-      {Object.keys(form.formState.errors).map((item) => (
-        <p className="bg-rose-400/70 p-1 z-50 font-normal rounded-md px-4">
-          {/*TODO: fix type warning*/}
-          {/* @ts-ignore */}
-          {form.formState.errors[item].message as string}
-        </p>
-      ))}
-
-      {/* disable when submitting */}
-      <Button type="submit" className="w-full text-xl h-12">
-        Sign Up
-      </Button>
-    </form>
+        <FormError message={error} />
+        <FormSuccess message={success} />
+        <Button
+          type="submit"
+          className="w-full h-12 text-lg"
+          disabled={isPending}
+        >
+          Register
+        </Button>
+      </form>
+    </Form>
   );
 };
 

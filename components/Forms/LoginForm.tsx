@@ -20,7 +20,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
 import { FormError } from "@/components/Forms/FormError";
-import { FormSuccess } from "@/components/Forms/FormSuccess";
 
 type FormFields = z.infer<typeof LoginSchema>;
 
@@ -95,7 +94,7 @@ const LoginForm = () => {
         <FormError message={error} />
         <Button
           type="submit"
-          className="w-full h-12 text-xl"
+          className="w-full h-12 text-lg"
           disabled={isPending}
         >
           Log in
