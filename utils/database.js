@@ -23,11 +23,11 @@ export const connectToDB = async () => {
   }
 };
 
-mongoose.connection.on("error", (error) => {
+mongoose.connection?.on("error", (error) => {
   console.error("MongoDB Error", error.message);
 });
 
-mongoose.connection.on("disconnected", () => {
+mongoose.connection?.on("disconnected", () => {
   isConnected = false;
   console.log("MongoDB disconnected");
 });

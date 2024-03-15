@@ -1,51 +1,73 @@
-import { FormEvent, useState } from "react";
-import toast from "react-hot-toast";
+"use client";
 
-import TextInput from "@/components/Input/TextInput";
+import * as z from "zod";
+
 import Button from "../Buttons/Button";
 import Link from "next/link";
-import { validateLoginForm } from "@/libs/validators";
+import { LoginSchema } from "@/schemas";
+import { login } from "@/actions/login";
+
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+type FormFields = z.infer<typeof LoginSchema>;
 
 const LoginForm = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const form = useForm<FormFields>({
+    resolver: zodResolver(LoginSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    const check = validateLoginForm({ username, password });
-
-    if (!check.valid) {
-      toast.error(check.message);
-      return;
+  const onSubmit = async (values: FormFields) => {
+    try {
+      await login(values).then((data) => {
+        if (data?.error) {
+          form.setError("root", {
+            message: data.error,
+          });
+        }
+      });
+    } catch (error) {
+      if (error instanceof Error) {
+        form.setError("root", {
+          message: error.message,
+        });
+      }
     }
-
-    setUsername("");
-    setPassword("");
   };
 
   return (
     <>
       <form
         className="flex flex-col items-center justify-center rounded-lg gap-3"
-        onSubmit={handleSubmit}
+        onSubmit={form.handleSubmit(onSubmit)}
       >
-        <TextInput
+        <input
+          {...form.register("email")}
           type="text"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          placeholder="Email"
           maxLength={20}
-          placeholder="Username"
         />
 
-        <TextInput
+        <input
+          {...form.register("password")}
           type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
           placeholder="Password"
           maxLength={20}
         />
 
+        {Object.keys(form.formState.errors).map((item) => (
+          <p className="bg-rose-400/70 p-1 z-50 font-normal rounded-md px-4">
+            {/*TODO: fix type warning*/}
+            {/* @ts-ignore */}
+            {form.formState.errors[item].message as string}
+          </p>
+        ))}
+
+        {/* disable when submitting */}
         <Button type="submit" text="Log In" />
       </form>
 

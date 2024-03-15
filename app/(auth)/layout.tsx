@@ -70,8 +70,6 @@ export default function AuthLayout({
 
   const path = usePathname();
 
-  console.log(path);
-
   return (
     <>
       <Toaster />

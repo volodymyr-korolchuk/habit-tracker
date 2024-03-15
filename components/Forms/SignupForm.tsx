@@ -1,73 +1,74 @@
-import { FormEvent, useState } from "react";
 import Link from "next/link";
 
-import toast from "react-hot-toast";
+import * as z from "zod";
 
-import TextInput from "@/components/Input/TextInput";
 import Button from "../Buttons/Button";
-import { validateSignupForm } from "@/libs/validators";
+import { register } from "@/actions/register";
+import { RegisterSchema } from "@/schemas";
+import { FieldError, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+type FormFields = z.infer<typeof RegisterSchema>;
 
 const SignupForm = () => {
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const form = useForm<FormFields>({
+    resolver: zodResolver(RegisterSchema),
+    defaultValues: {
+      username: "",
+      email: "",
+      password: "",
+    },
+  });
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    const check = validateSignupForm({
-      username,
-      email,
-      password,
-      confirmPassword,
-    });
-
-    if (!check?.valid) {
-      toast.error(check.message);
-      return;
+  const onSubmit = async (values: FormFields) => {
+    try {
+      await register(values).then((data) => {
+        if (data?.error) {
+          form.setError("root", {
+            message: data.error,
+          });
+        }
+      });
+    } catch (error) {
+      if (error instanceof Error) {
+        form.setError("root", {
+          message: error.message,
+        });
+      }
     }
-
-    setUsername("");
-    setEmail("");
-    setPassword("");
-    setConfirmPassword("");
   };
 
   return (
     <>
       <form
         className="flex flex-col items-center justify-center rounded-lg gap-3"
-        onSubmit={handleSubmit}
+        onSubmit={form.handleSubmit(onSubmit)}
       >
-        <TextInput
+        <input
+          {...form.register("username")}
           type="text"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          maxLength={20}
           placeholder="Username"
+          maxLength={20}
         />
-        <TextInput
-          type="text"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="Email"
-        />
-        <TextInput
+
+        <input {...form.register("email")} type="email" placeholder="Email" />
+
+        <input
+          {...form.register("password")}
           type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
           placeholder="Password"
           maxLength={28}
         />
-        <TextInput
-          type="password"
-          value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
-          placeholder="Confirm password"
-          maxLength={28}
-        />
 
+        {Object.keys(form.formState.errors).map((item) => (
+          <p className="bg-rose-400/70 p-1 z-50 font-normal rounded-md px-4">
+            {/*TODO: fix type warning*/}
+            {/* @ts-ignore */}
+            {form.formState.errors[item].message as string}
+          </p>
+        ))}
+
+        {/* disable when submitting */}
         <Button type="submit" text="Sign Up" />
       </form>
 

@@ -1,29 +1,28 @@
 import { Schema, model, models } from "mongoose";
 
-const UserSchema = new Schema({
-  username: {
-    type: String,
-    unique: [true, "Username is already taken"],
-    required: [true, "This username is required"],
+const UserSchema = new Schema(
+  {
+    username: {
+      type: String,
+      unique: [true, "Username is already taken"],
+      required: [true, "This username is required"],
+    },
+    email: {
+      type: String,
+      unique: [true, "This email is already taken"],
+      required: [true, "Email is required"],
+    },
+    password: {
+      type: String,
+      required: [true, "Password is required"],
+    },
+    image: {
+      type: String,
+    },
   },
-  email: {
-    type: String,
-    unique: [true, "This email is already taken"],
-    required: [true, "Email is required"],
-    match: [
-      /^(?=.{8,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/,
-      "Username invalid, it should contain 8-20 alphanumeric letters and be unique!",
-    ],
-  },
-  password: {
-    type: String,
-    unique: true,
-  },
-  image: {
-    type: String,
-  },
-});
+  { timestamps: true }
+);
 
-const User = models.User || model("User", UserSchema);
+const User = models?.User || model("User", UserSchema);
 
 export default User;

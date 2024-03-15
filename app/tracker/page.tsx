@@ -14,6 +14,7 @@ import Tracker from "../../components/Tracker/Tracker";
 import Button from "@/components/Buttons/Button";
 import CreateHabitModal from "@/components/Modals/CreateHabitModal";
 import useModal from "@/hooks/useModal";
+import { signOut } from "next-auth/react";
 
 const TrackerPage = () => {
   const { selectedMonth, daysOfMonth, titles, habitsToDays, months } =
@@ -69,6 +70,12 @@ const TrackerPage = () => {
           daysOfMonth={daysOfMonthArray}
           openModal={openModal}
         />
+        <button
+          onClick={() => signOut()}
+          className="z-50 absolute bottom-2 bg-rose-700 rounded-md p-2 px-2 m-2 text-xl"
+        >
+          Sign out
+        </button>
       </div>
     </div>
   );

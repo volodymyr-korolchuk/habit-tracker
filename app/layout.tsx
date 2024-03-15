@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Afacad } from "next/font/google";
 import "./globals.css";
+import { AuthProvider } from "./providers";
 
 const font = Afacad({ weight: ["400", "500", "600"], subsets: ["latin"] });
 
@@ -16,7 +17,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={font.className}>{children}</body>
+      <body className={font.className}>
+        <AuthProvider>{children}</AuthProvider>
+      </body>
     </html>
   );
 }
