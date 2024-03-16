@@ -12,23 +12,14 @@ import Habit from "@/components/Tracker/Habits/Habit";
 import Tracker from "@/components/Tracker/Tracker";
 import MonthsContainer from "@/components/Tracker/Months/MonthsContainer";
 import CreateHabitModal from "@/components/Modals/CreateHabitModal";
-import CheckboxContainer from "@/components/Checkbox/CheckboxContainer";
 
 import useModal from "@/hooks/useModal";
-import {
-  FaChartLine,
-  FaNoteSticky,
-  FaRegClock,
-  FaStopwatch,
-} from "react-icons/fa6";
+import { FaChartLine, FaNoteSticky, FaStopwatch } from "react-icons/fa6";
 
 const TrackerPage = () => {
-  const { selectedMonth, daysOfMonth, titles, habitsToDays, months } =
-    useTracker();
+  const { titles } = useTracker();
 
   const { isOpened, openModal, closeModal } = useModal();
-
-  let habitsCheckedDaysArrays = habitsToDays ? [...habitsToDays.values()] : [];
 
   const header = <MonthsContainer />;
 
@@ -51,19 +42,6 @@ const TrackerPage = () => {
 
   const aside = titles.map((title) => <Habit key={title} label={title} />);
 
-  const daysOfMonthArray = daysOfMonth.map((item, index) => (
-    <div
-      key={item}
-      className="flex items-center justify-center md:w-16 w-12 md:h-full h-12 bg-neutral-300 rounded-sm text-[30px]"
-    >
-      <p>{index + 1}</p>
-    </div>
-  ));
-
-  const content = habitsCheckedDaysArrays?.map((row, index) => (
-    <CheckboxContainer key={index} checkedDaysIndexes={row[selectedMonth]} />
-  ));
-
   return (
     <div className="relative flex w-full h-full items-center justify-center">
       <Image
@@ -79,9 +57,9 @@ const TrackerPage = () => {
         <Tracker
           header={header}
           aside={aside}
-          content={content}
+          content={null}
           sidebar={sidebar}
-          daysOfMonth={daysOfMonthArray}
+          daysOfMonth={null}
           openModal={openModal}
         />
         <button
