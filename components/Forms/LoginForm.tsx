@@ -49,7 +49,7 @@ const LoginForm = () => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="flex flex-col items-center justify-center rounded-lg gap-3 w-full"
+        className="flex flex-col items-center justify-center rounded-lg gap-2 w-full"
       >
         <FormField
           control={form.control}
@@ -60,7 +60,7 @@ const LoginForm = () => {
               <FormControl>
                 <Input
                   {...field}
-                  className="h-12 w-full text-xl bg-neutral-100/40"
+                  className="h-12 border-neutral-900/50 w-full text-xl bg-neutral-100/40"
                   type="email"
                   placeholder="johndoe@example.com"
                   disabled={isPending}
@@ -80,7 +80,7 @@ const LoginForm = () => {
               <FormControl>
                 <Input
                   {...field}
-                  className="h-12 w-full text-xl bg-neutral-100/40"
+                  className="h-12 border-neutral-900/50 w-full text-xl bg-neutral-100/40"
                   type="password"
                   placeholder="******"
                   disabled={isPending}
@@ -94,7 +94,7 @@ const LoginForm = () => {
         <FormError message={error} />
         <Button
           type="submit"
-          className="w-full h-12 text-lg"
+          className="w-full h-12 text-lg my-2"
           disabled={isPending}
         >
           Log in

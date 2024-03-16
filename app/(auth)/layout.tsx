@@ -25,7 +25,7 @@ export default function AuthLayout({
         }}
       ></div>
       <div
-        className="animate-[bounce_2s_ease-in-out_infinite] absolute w-48 h-48 bg-sky-300 rounded-full"
+        className="animate-[bounce_2s_ease-in-out_infinite]  absolute w-48 h-48 bg-sky-300 rounded-full"
         style={{
           top: "20%",
           left: "20%",
