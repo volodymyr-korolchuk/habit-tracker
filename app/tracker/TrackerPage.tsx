@@ -1,28 +1,18 @@
 "use client";
-
 import React from "react";
 import Image from "next/image";
 import { signOut } from "next-auth/react";
-
 import { Button } from "@/components/ui/button";
-
 import { useTracker } from "./context/TrackerContext";
-
 import Habit from "@/components/Tracker/Habits/Habit";
 import Tracker from "@/components/Tracker/Tracker";
 import MonthsContainer from "@/components/Tracker/Months/MonthsContainer";
 import CreateHabitModal from "@/components/Modals/CreateHabitModal";
 import CheckboxContainer from "@/components/Checkbox/CheckboxContainer";
-
 import useModal from "@/hooks/useModal";
-import {
-  FaChartLine,
-  FaNoteSticky,
-  FaRegClock,
-  FaStopwatch,
-} from "react-icons/fa6";
+import { FaChartLine } from "react-icons/fa6";
 
-const TrackerPage = () => {
+export const TrackerPage = () => {
   const { selectedMonth, daysOfMonth, titles, habitsToDays, months } =
     useTracker();
 
@@ -32,20 +22,28 @@ const TrackerPage = () => {
 
   const header = <MonthsContainer />;
 
-  const buttons = {
-    Stats: <FaChartLine size={25} />,
-    Notes: <FaNoteSticky size={25} />,
-    Deadline: <FaStopwatch size={25} />,
-  };
-
   const sidebar = (
     <ul className="flex flex-col gap-1">
-      {Object.entries(buttons).map((button) => (
-        <Button key={button[0]} className="flex items-center justify-start">
-          {button[1]}
-          <p className="px-2 font-normal">{button[0]}</p>
-        </Button>
-      ))}
+      {/*
+            
+            
+            
+            
+            
+      
+            */}
+      <Button>
+        <FaChartLine />
+      </Button>
+      <Button>
+        <FaRegClock />
+      </Button>
+      <Button>
+        <FaNoteSticky />
+      </Button>
+      <Button>
+        <FaStopwatch />
+      </Button>
     </ul>
   );
 
@@ -94,5 +92,3 @@ const TrackerPage = () => {
     </div>
   );
 };
-
-export default TrackerPage;
