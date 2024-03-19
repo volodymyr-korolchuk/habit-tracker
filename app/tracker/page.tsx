@@ -44,8 +44,8 @@ const TrackerPage = () => {
 
   const content = Array(titles.length)
     .fill(1)
-    .map((_) => (
-      <div className="flex  items-center gap-1 w-full">
+    .map((title) => (
+      <div key={title} className="flex items-center gap-1 w-full">
         {daysOfMonth.map((_, index) => (
           <div
             key={index + 1}
