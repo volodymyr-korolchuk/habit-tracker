@@ -45,14 +45,14 @@ export function TrackerContextProvider({ children }: { children: ReactNode }) {
     const fetchHabits = async () => {
       try {
         // change later to fetch the habits of a certain user
-        const response = await fetch("/api/habits");
+        // const response = await fetch("/api/habits");
 
-        if (response.status !== 200) {
-          console.log("Response was not OK in in TrackerContext");
-          return;
-        }
+        // if (response.status !== 200) {
+        //   console.log("Response was not OK in in TrackerContext");
+        //   return;
+        // }
 
-        const data = await response.json();
+        // const data = await response.json();
         setHabitsToDays(new Map());
         //setHabitsToDays(parseToMap(data));
       } catch (error) {

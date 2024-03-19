@@ -17,7 +17,7 @@ export default function RootLayout({
   return (
     <>
       <Toaster />
-      <TrackerContextProvider>{children}</TrackerContextProvider>;
+      <TrackerContextProvider>{children}</TrackerContextProvider>
     </>
   );
 }

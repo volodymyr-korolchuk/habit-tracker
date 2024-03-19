@@ -14,7 +14,7 @@ const MonthsContainer: React.FC = () => {
   };
 
   return (
-    <div className="w-full flex gap-2 justify-around">
+    <div className="flex flex-col flex-1 h-full md:h-auto md:flex-row gap-1 justify-around">
       {months.map((month, index) => {
         return (
           <TinyButton
