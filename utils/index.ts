@@ -1,3 +1,5 @@
+import { Months } from "@/constants/months";
+
 export const getGretting = () => {
   const time = new Date().getHours();
 
@@ -8,4 +10,9 @@ export const getGretting = () => {
   } else {
     return "Good Evening! 🌜";
   }
+};
+
+export const getDateByIndex = (month: Months, index: number) => {
+  // TODO
+  return Date.now();
 };
