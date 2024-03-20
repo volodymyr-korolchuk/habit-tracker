@@ -33,7 +33,5 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
           return { error: "Somethong went wrong" };
       }
     }
-
-    throw error;
   }
 };

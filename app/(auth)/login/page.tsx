@@ -15,7 +15,7 @@ const Login: React.FC = () => {
 
       <LoginForm />
       <p className="text-left w-full px-2">
-        Haven't registered yet?{" "}
+        Haven&apos;t registered yet?{" "}
         <Link href="/signup">
           <strong>Sign Up</strong>
         </Link>
