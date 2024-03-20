@@ -16,9 +16,29 @@ export const createHabit = async (title: string) => {
     }
 
     const data = await response.json();
-    return data.habit; // Assuming the habit object is returned in the response
+    return data.habit;
   } catch (error) {
     console.error("Error creating habit:", error);
-    throw error; // Rethrow the error for the caller to handle
+    throw error;
   }
 };
+
+export const getUserHabits = async (email: string) => {
+  try {
+    const userByEmailURL = `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/users/email/${email}`;
+
+    const userByEmail = await fetch(userByEmailURL);
+    const user = await userByEmail.json();
+
+    const habitsByUserIdURL = `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/habits/${user._id}`;
+
+    const habitsByUserId = await fetch(habitsByUserIdURL);
+    const habits = await habitsByUserId.json();
+
+    return habits;
+  } catch (error) {
+    throw error;
+  }
+};
+
+

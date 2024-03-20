@@ -1,7 +1,7 @@
 "use client";
 
-import React from "react";
-import { signOut } from "next-auth/react";
+import React, { useEffect, useState } from "react";
+import { getSession, signOut } from "next-auth/react";
 
 import { Button } from "@/components/ui/button";
 
@@ -14,16 +14,37 @@ import CreateHabitModal from "@/components/Modals/CreateHabitModal";
 
 import useModal from "@/hooks/useModal";
 import { FaCheck } from "react-icons/fa6";
+import toast from "react-hot-toast";
+import { getUserHabits } from "@/data/habit";
 
 const TrackerPage = () => {
-  let titles = [
-    "Ride a bike",
-    "Play an instrument",
-    "Run",
-    "Eat salads",
-    "Go swimming",
-    "Reading",
-  ];
+  const [titles, setTitles] = useState<string[]>([]);
+
+  useEffect(() => {
+    const getHabitsData = async () => {
+      try {
+        const session = await getSession();
+
+        if (!session || !session.user?.email) {
+          return;
+        }
+
+        const email = session.user.email;
+
+        const habits = await getUserHabits(email);
+
+        for (const habit of habits) {
+          setTitles((prev) => [...prev, habit.title]);
+        }
+      } catch (error) {
+        if (error instanceof Error) {
+          toast.error(error.message);
+        }
+      }
+    };
+
+    getHabitsData();
+  }, []);
 
   const { isOpened, openModal, closeModal } = useModal();
 
