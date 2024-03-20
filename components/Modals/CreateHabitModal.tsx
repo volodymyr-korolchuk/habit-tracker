@@ -21,7 +21,7 @@ const isValidInput = (title: string) => {
 const CreateHabitModal: React.FC<Props> = ({ isOpened, onClose }) => {
   const [title, setTitle] = useState("");
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!isValidInput(title)) {
@@ -29,8 +29,25 @@ const CreateHabitModal: React.FC<Props> = ({ isOpened, onClose }) => {
     }
 
     try {
-      //
-    } catch (error: unknown) {
+      const url = `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/habits/create`;
+
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ title: title }),
+      });
+
+      const data = await response.json();
+
+      if (data?.error) {
+        toast.error(data.error);
+        return;
+      } else {
+        toast.success("New habit created!");
+      }
+    } catch (error) {
       if (error instanceof Error) {
         toast.error(error.message);
       } else {
@@ -38,7 +55,6 @@ const CreateHabitModal: React.FC<Props> = ({ isOpened, onClose }) => {
       }
     }
 
-    // cleanup
     setTitle("");
     onClose();
   };

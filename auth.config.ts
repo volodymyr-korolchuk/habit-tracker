@@ -28,7 +28,7 @@ export default {
 
         const { email, password } = validatedFields.data;
 
-        const url = `${process.env.BASE_URL}/api/v1/users/email/${email}`;
+        const url = `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/users/email/${email}`;
 
         const response = await fetch(url);
         const user = await response.json();
