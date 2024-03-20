@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 
 import { useTracker } from "./context/TrackerContext";
 
-import Habit from "@/components/Tracker/Habits/Habit";
+import HabitItem from "@/components/Tracker/Habits/Habit";
 import Tracker from "@/components/Tracker/Tracker";
 import MonthsContainer from "@/components/Tracker/Months/MonthsContainer";
 import CreateHabitModal from "@/components/Modals/CreateHabitModal";
@@ -16,6 +16,7 @@ import useModal from "@/hooks/useModal";
 import { FaCheck } from "react-icons/fa6";
 import toast from "react-hot-toast";
 import { getUserHabits } from "@/data/habit";
+import { Habit } from "@/types";
 
 const TrackerPage = () => {
   const [titles, setTitles] = useState<string[]>([]);
@@ -24,18 +25,14 @@ const TrackerPage = () => {
     const getHabitsData = async () => {
       try {
         const session = await getSession();
-
         if (!session || !session.user?.email) {
           return;
         }
 
         const email = session.user.email;
+        const habits: Habit[] = await getUserHabits(email);
 
-        const habits = await getUserHabits(email);
-
-        for (const habit of habits) {
-          setTitles((prev) => [...prev, habit.title]);
-        }
+        setTitles([...habits.map((habit) => habit.title)]);
       } catch (error) {
         if (error instanceof Error) {
           toast.error(error.message);
@@ -50,7 +47,7 @@ const TrackerPage = () => {
 
   const header = <MonthsContainer />;
 
-  const aside = titles.map((title) => <Habit key={title} label={title} />);
+  const aside = titles.map((title) => <HabitItem key={title} label={title} />);
 
   const { daysOfMonth } = useTracker();
 
