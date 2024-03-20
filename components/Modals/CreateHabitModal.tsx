@@ -4,6 +4,7 @@ import { FaXmark } from "react-icons/fa6";
 import { Input } from "@/components/ui/input";
 import { Label } from "../ui/label";
 import { Button } from "../ui/button";
+import { createHabit } from "@/data/habit";
 
 interface Props {
   isOpened: boolean;
@@ -29,34 +30,21 @@ const CreateHabitModal: React.FC<Props> = ({ isOpened, onClose }) => {
     }
 
     try {
-      const url = `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/habits/create`;
-
-      const response = await fetch(url, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ title: title }),
-      });
-
-      const data = await response.json();
+      const data = await createHabit(title);
 
       if (data?.error) {
         toast.error(data.error);
-        return;
       } else {
         toast.success("New habit created!");
       }
     } catch (error) {
       if (error instanceof Error) {
         toast.error(error.message);
-      } else {
-        console.error(error);
       }
+    } finally {
+      setTitle("");
+      onClose();
     }
-
-    setTitle("");
-    onClose();
   };
 
   return (
