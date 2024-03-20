@@ -1,40 +1,48 @@
-import { connectToDB } from "@/utils/database.js";
 import { NextRequest, NextResponse } from "next/server";
 
+import { auth } from "@/auth";
+import { getUserByEmail } from "@/data/user";
+
 import Habit from "@/models/Habit";
-import User from "@/models/User";
 
 export async function POST(req: NextRequest) {
   try {
-    await connectToDB();
+    const response = await auth();
 
-    const { userId, title } = await req.json();
-
-    if (!userId || !title) {
+    if (!response || !response?.user?.email) {
       return NextResponse.json(
-        { error: "Habit data was not provided" },
+        { error: "No active session." },
+        { status: 403 }
+      );
+    }
+
+    const user = await getUserByEmail(response.user.email);
+
+    if (!user) {
+      return NextResponse.json(
+        { error: "User does not exist." },
+        { status: 403 }
+      );
+    }
+
+    const { title } = await req.json();
+
+    if (!title) {
+      return NextResponse.json(
+        { error: "Habit title was not provided." },
         { status: 400 }
       );
     }
 
-    const isUserExists = await User.findOne({ userId });
+    const habitDoesExist = await Habit.findOne({ title });
 
-    if (!isUserExists) {
-      return NextResponse.json(
-        { error: "User does not exist" },
-        { status: 404 }
-      );
-    }
-
-    const isHabitExists = await Habit.findOne({ title });
-
-    if (isHabitExists) {
+    if (habitDoesExist) {
       return NextResponse.json({
-        error: "Habit with such name already exists",
+        error: "Habit with such name already exists.",
       });
     }
 
-    const newHabit = new Habit({ owner: userId, title: title });
+    const newHabit = new Habit({ owner: user._id, title: title });
 
     await newHabit.save();
 
@@ -45,7 +53,7 @@ export async function POST(req: NextRequest) {
     }
 
     return NextResponse.json(
-      { message: "Failed to create a new habit" },
+      { message: "Failed to create a new habit." },
       {
         status: 500,
       }
