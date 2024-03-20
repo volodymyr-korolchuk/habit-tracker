@@ -49,12 +49,14 @@ const TrackerPage = () => {
         {daysOfMonth.map((_, index) => (
           <div
             key={index + 1}
-            className="h-12 w-12 md:h-14 md:w-14 bg-neutral-500 flex items-center justify-center rounded-md"
+            className="h-12 w-12 md:h-14 md:w-14 bg-neutral-400 flex items-center justify-center rounded-md"
           >
             <Button
               type="button"
-              className={`bg-transparent h-full border-none shadow-none w-full ${
-                index % 2 === 0 ? "bg-green-500" : "bg-transparent"
+              className={`h-full border-none shadow-none w-full ${
+                index % 2 === 0
+                  ? "bg-green-500 hover:bg-green-300"
+                  : "bg-transparent hover:bg-neutral-300"
               }`}
             >
               {index % 2 === 0 ? <FaCheck size={32} /> : null}

@@ -31,26 +31,26 @@ const Tracker: React.FC<Props> = ({
           <nav className="p-1 md:h-auto h-full">{header}</nav>
         </div>
 
-        <div className="flex justify-between items-start h-full overflow-auto w-full">
-          <div className="flex w-[250px] flex-col items-start justify-between gap-y-1 bg-neutral-100 px-1 pb-1">
+        <div className="flex justify-between items-start h-full overflow-auto w-full bg-neutral-100">
+          <div className="flex w-[250px] flex-col items-start justify-between gap-y-1 px-1 pb-1">
             <h2 className="text-center flex justify-center items-center w-full md:h-16 h-14 font-bold md:text-3xl text-2xl">
               HABITS
             </h2>
             {aside}
             <Button
               onClick={openModal}
-              className="w-full h-14 rounded-md font-normal text-lg"
+              className="w-full md:h-14 h-12 rounded-md font-normal text-lg"
             >
               <p className="pr-2">New Habit</p> <IoCreate size={20} />
             </Button>
           </div>
 
           <section className="flex flex-col">
-            <div className="flex gap-x-1 items-center justify-start bg-neutral-100 px-1 md:h-auto h-14 p-1">
+            <div className="flex gap-x-1 items-center justify-start px-1 md:h-auto h-14 p-1">
               {daysOfMonth}
             </div>
 
-            <div className="w-full h-screen flex-1 flex flex-col justify-between gap-y-1 p-1 bg-neutral-100">
+            <div className="w-full h-screen flex-1 flex flex-col justify-between gap-y-1 p-1">
               {content}
             </div>
           </section>
