@@ -31,5 +31,3 @@ mongoose.connection?.on("disconnected", () => {
   isConnected = false;
   console.log("MongoDB disconnected");
 });
-
-export default mongoose;

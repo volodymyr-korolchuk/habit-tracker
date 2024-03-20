@@ -5,7 +5,6 @@ import Google from "next-auth/providers/google";
 import { NextAuthConfig } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 
-import { getUserByEmail } from "./data/user";
 import { LoginSchema } from "./schemas";
 
 export default {
@@ -23,20 +22,25 @@ export default {
       async authorize(credentials) {
         const validatedFields = LoginSchema.safeParse(credentials);
 
-        if (validatedFields.success) {
-          const { email, password } = validatedFields.data;
+        if (!validatedFields.success) {
+          return null;
+        }
 
-          const user = await getUserByEmail(email);
+        const { email, password } = validatedFields.data;
 
-          if (!user || !user.password) {
-            return null;
-          }
+        const url = `${process.env.BASE_URL}/api/v1/users/email/${email}`;
 
-          const passwordsMatch = await bcrypt.compare(password, user.password);
+        const response = await fetch(url);
+        const user = await response.json();
 
-          if (passwordsMatch) {
-            return user;
-          }
+        if (!user || !user.password) {
+          return null;
+        }
+
+        const passwordsMatch = await bcrypt.compare(password, user.password);
+
+        if (passwordsMatch) {
+          return user;
         }
 
         return null;

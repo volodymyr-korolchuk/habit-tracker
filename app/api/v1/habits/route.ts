@@ -5,8 +5,6 @@ import { NextRequest, NextResponse } from "next/server";
 export async function GET(req: NextRequest) {
   try {
     await connectToDB();
-    // await connectToDB();
-    // fecth from db
 
     const allHabits = await Habit.find();
 
