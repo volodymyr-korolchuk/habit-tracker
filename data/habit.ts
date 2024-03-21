@@ -1,4 +1,3 @@
-import HabitModel from "@/models/Habit";
 import { Habit } from "@/types";
 
 export const createHabit = async (title: string) => {
@@ -13,12 +12,12 @@ export const createHabit = async (title: string) => {
       body: JSON.stringify({ title }),
     });
 
-    if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.error || "Failed to create habit");
+    const data = await response.json();
+
+    if (data.error) {
+      throw new Error(data.error || "Failed to create habit");
     }
 
-    const data = await response.json();
     return data.habit;
   } catch (error) {
     console.error("Error creating habit:", error);
