@@ -10,10 +10,7 @@ const HabitSchema = new Schema(
       type: String,
       required: [true, "Habit title is required"],
     },
-    keptOnDates: {
-      type: [Date],
-      default: [],
-    },
+    keptOnDates: [{ type: Date, default: [] }],
   },
   { timestamps: true }
 );

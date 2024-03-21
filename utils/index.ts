@@ -12,7 +12,10 @@ export const getGretting = () => {
   }
 };
 
-export const getDateByIndex = (month: Months, index: number) => {
-  // TODO
-  return Date.now();
+export const getFormattedDate = (month: Months, index: number): string => {
+  const yearPart = new Date().getFullYear();
+  const monthPart = `${month + 1}`.padStart(2, "0");
+  const dayPart = `${index + 1}`.padStart(2, "0");
+
+  return `${yearPart}-${monthPart}-${dayPart}`;
 };

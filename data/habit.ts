@@ -1,3 +1,5 @@
+import { Habit } from "@/types";
+
 export const createHabit = async (title: string) => {
   const url = `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/habits/create`;
 
@@ -23,7 +25,7 @@ export const createHabit = async (title: string) => {
   }
 };
 
-export const getUserHabits = async (email: string) => {
+export const getUserHabits = async (email: string): Promise<Habit[]> => {
   try {
     const userByEmailURL = `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/users/email/${email}`;
 
@@ -40,5 +42,3 @@ export const getUserHabits = async (email: string) => {
     throw error;
   }
 };
-
-

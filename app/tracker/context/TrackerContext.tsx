@@ -9,14 +9,16 @@ import {
 } from "react";
 
 import { Months } from "../../../constants/months";
-import { parseToMap } from "../../../lib/dataParser";
 import { getDaysInMonth } from "@/lib/dateUtils";
+import { getSession } from "next-auth/react";
+import { getUserHabits } from "@/data/habit";
 
 interface TrackerContextType {
   selectedMonth: Months;
   setSelectedMonth: (month: Months) => void;
+
   daysOfMonth: number[];
-  habitsToDays: Map<string, number[][]> | null;
+  habitToDateStrings: Map<string, string[]> | null;
   titles: string[];
   months: string[];
 }
@@ -24,7 +26,7 @@ interface TrackerContextType {
 const TrackerContext = createContext<TrackerContextType>({
   selectedMonth: Months.JAN,
   daysOfMonth: Array(31).fill(0),
-  habitsToDays: new Map(),
+  habitToDateStrings: new Map<string, string[]>(),
   titles: [""],
   months: [""],
   setSelectedMonth: () => {},
@@ -36,42 +38,55 @@ export function useTracker() {
 
 export function TrackerContextProvider({ children }: { children: ReactNode }) {
   const [selectedMonth, setSelectedMonth] = useState<number>(Months.JAN);
-  const [habitsToDays, setHabitsToDays] = useState<Map<
+  const [habitToDateStrings, setHabitToDateStrings] = useState<Map<
     string,
-    number[][]
+    string[]
   > | null>(null);
+  const [titles, setTitles] = useState<string[]>([]);
 
   useEffect(() => {
-    const fetchHabits = async () => {
+    const getHabitsData = async () => {
       try {
-        // change later to fetch the habits of a certain user
-        // const response = await fetch("/api/habits");
+        const session = await getSession();
+        if (!session || !session.user?.email) {
+          return;
+        }
 
-        // if (response.status !== 200) {
-        //   console.log("Response was not OK in in TrackerContext");
-        //   return;
-        // }
+        const email = session.user.email;
+        const habits = await getUserHabits(email);
 
-        // const data = await response.json();
-        setHabitsToDays(new Map());
-        //setHabitsToDays(parseToMap(data));
+        setTitles([...habits.map((habit) => habit.title)]);
+
+        const titlesToDates = new Map();
+        for (const habit of habits) {
+          const dates = habit.keptOnDates.map((date: string) =>
+            new Date(date).toISOString().slice(0, 10)
+          );
+          titlesToDates.set(habit.title, dates);
+        }
+
+        setHabitToDateStrings(titlesToDates);
       } catch (error) {
-        console.log(error);
+        if (error instanceof Error) {
+          throw error;
+        }
       }
     };
 
-    fetchHabits();
+    getHabitsData();
   }, []);
 
-  const daysOfMonth = Array(
-    getDaysInMonth(new Date().getFullYear(), selectedMonth)
-  ).fill("");
+  useEffect(() => {
+    console.log("HABITS TO DATES: ", habitToDateStrings);
+  }, [habitToDateStrings]);
 
   const months = Object.values(Months).filter(
     (value) => typeof value === "string"
   ) as string[];
 
-  const titles = habitsToDays ? [...habitsToDays?.keys()] : [];
+  const daysOfMonth = Array(
+    getDaysInMonth(new Date().getFullYear(), selectedMonth)
+  ).fill(0);
 
   const handleSetSelectedMonth = (month: Months) => {
     setSelectedMonth(month);
@@ -84,7 +99,7 @@ export function TrackerContextProvider({ children }: { children: ReactNode }) {
         setSelectedMonth: handleSetSelectedMonth,
         daysOfMonth,
         months,
-        habitsToDays,
+        habitToDateStrings,
         titles,
       }}
     >
