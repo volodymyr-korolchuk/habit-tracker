@@ -33,7 +33,7 @@ const Tracker: React.FC<Props> = ({
 
         <div className="flex justify-between items-start h-full overflow-auto w-full bg-neutral-100">
           <div className="flex w-[250px] flex-col items-start justify-between gap-y-1 px-1 pb-1">
-            <h2 className="text-center flex justify-center items-center w-full md:h-16 h-14 font-bold md:text-3xl text-2xl">
+            <h2 className="text-center flex justify-center items-center md:w-60 w-36 md:h-16 h-14 font-bold md:text-3xl text-2xl">
               HABITS
             </h2>
             {aside}
