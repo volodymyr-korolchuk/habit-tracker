@@ -66,11 +66,22 @@ export const markHabitKept = async (habitId: string, date: Date) => {
 };
 
 export const discardHabitKept = async (habitId: string, date: Date) => {
-  // try {
-  //   const filter = { _id: habitId };
-  //   const update = { $pull: { keptOnDates: date } };
-  //   await HabitModel.findOneAndUpdate(filter, update, { new: true });
-  // } catch (error) {
-  //   throw error;
-  // }
+  try {
+    const discardHabitKeptURL = `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/habits/discardKept/${habitId}/${date}`;
+
+    const response = await fetch(discardHabitKeptURL, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        habitId,
+        date,
+      }),
+    });
+    const result = await response.json();
+    return result.habit;
+  } catch (error) {
+    throw error;
+  }
 };
