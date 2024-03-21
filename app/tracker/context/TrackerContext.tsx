@@ -8,11 +8,11 @@ import {
   useState,
 } from "react";
 
-import { Months } from "../../../constants/months";
+import { Months } from "@/constants/months";
 import { getSession } from "next-auth/react";
 import { getUserHabits } from "@/data/habit";
-import { extractHabitTitles, parseHabitsToMap } from "@/utils/data";
 import { getDaysInMonth } from "@/utils/date";
+import { extractHabitTitles, parseHabitsToMap } from "@/utils/data";
 
 interface TrackerContextType {
   selectedMonth: Months;

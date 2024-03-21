@@ -3,16 +3,15 @@
 import React from "react";
 import { signOut } from "next-auth/react";
 
-import { FaCheck } from "react-icons/fa6";
-
 import HabitItem from "@/components/Tracker/Habits/Habit";
 import Tracker from "@/components/Tracker/Tracker";
 import MonthsContainer from "@/components/Tracker/Months/MonthsContainer";
 import CreateHabitModal from "@/components/Modals/CreateHabitModal";
-import { Button } from "@/components/ui/button";
+import CheckTile from "@/components/Buttons/CheckTile";
 
-import { useTracker } from "./context/TrackerContext";
 import useModal from "@/hooks/useModal";
+import { useTracker } from "./context/TrackerContext";
+
 import { getFormattedDate } from "@/utils/date";
 
 const TrackerPage = () => {
@@ -30,7 +29,7 @@ const TrackerPage = () => {
 
   const days = daysOfMonth.map((_, index) => (
     <div
-      key={index + 1}
+      key={index}
       className="md:h-14 md:w-14 h-12 w-12 bg-neutral-300 flex items-center justify-center text-2xl rounded-sm"
     >
       {index + 1}
@@ -48,23 +47,7 @@ const TrackerPage = () => {
               getFormattedDate(selectedMonth, index)
             );
 
-            return (
-              <div
-                key={index + 1}
-                className="h-12 w-12 md:h-14 md:w-14 bg-neutral-400 flex items-center justify-center rounded-md"
-              >
-                <Button
-                  type="button"
-                  className={`h-full border-none shadow-none w-full ${
-                    isMarked
-                      ? "bg-green-400 hover:bg-green-300"
-                      : "bg-neutral-400 hover:bg-neutral-300"
-                  }`}
-                >
-                  {isMarked ? <FaCheck size={32} /> : null}
-                </Button>
-              </div>
-            );
+            return <CheckTile isMarked={isMarked} />;
           })}
         </div>
       );
