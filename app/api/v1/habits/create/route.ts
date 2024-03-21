@@ -34,6 +34,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    // TODO: fix to search only within current user`s habits
     const habitDoesExist = await Habit.findOne({ title });
 
     if (habitDoesExist) {

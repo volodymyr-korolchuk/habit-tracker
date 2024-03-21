@@ -1,6 +1,5 @@
 import HabitModel from "@/models/Habit";
 import { Habit } from "@/types";
-import { ObjectId } from "mongoose";
 
 export const createHabit = async (title: string) => {
   const url = `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/habits/create`;
@@ -45,24 +44,33 @@ export const getUserHabits = async (email: string): Promise<Habit[]> => {
   }
 };
 
-export const markHabitKept = async (habitId: ObjectId, date: Date) => {
+export const markHabitKept = async (habitId: string, date: Date) => {
   try {
-    const query = { _id: habitId };
-    const update = { $push: { keptOnDates: date } };
+    const markHabitKeptURL = `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/habits/markKept/${habitId}/${date}`;
 
-    await HabitModel.findOneAndUpdate(query, update, { new: true });
+    const response = await fetch(markHabitKeptURL, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        habitId,
+        date,
+      }),
+    });
+    const result = await response.json();
+    return result.habit;
   } catch (error) {
     throw error;
   }
 };
 
-export const discardHabitKept = async (habitId: ObjectId, date: Date) => {
-  try {
-    const filter = { _id: habitId };
-    const update = { $pull: { keptOnDates: date } };
-
-    await HabitModel.findOneAndUpdate(filter, update, { new: true });
-  } catch (error) {
-    throw error;
-  }
+export const discardHabitKept = async (habitId: string, date: Date) => {
+  // try {
+  //   const filter = { _id: habitId };
+  //   const update = { $pull: { keptOnDates: date } };
+  //   await HabitModel.findOneAndUpdate(filter, update, { new: true });
+  // } catch (error) {
+  //   throw error;
+  // }
 };
