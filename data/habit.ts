@@ -65,6 +65,13 @@ export const markHabitKept = async (habitId: string, date: Date) => {
   }
 };
 
+/**
+ *
+ * @param {string} habitId
+ * ID string of a habit of a certain user.
+ * @param {string} date
+ * Date string. Should only be provided in a form of YYYY-MM-dd
+ */
 export const discardHabitKept = async (habitId: string, date: Date) => {
   try {
     const discardHabitKeptURL = `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/habits/discardKept/${habitId}/${date}`;
