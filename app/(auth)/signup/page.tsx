@@ -2,7 +2,7 @@
 
 import React from "react";
 import SignupForm from "@/components/Forms/SignupForm";
-import { getGretting } from "@/utils";
+import { getGretting } from "@/utils/misc";
 import Link from "next/link";
 
 interface Props {}

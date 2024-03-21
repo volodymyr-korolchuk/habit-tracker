@@ -11,9 +11,9 @@ import MonthsContainer from "@/components/Tracker/Months/MonthsContainer";
 import CreateHabitModal from "@/components/Modals/CreateHabitModal";
 import { Button } from "@/components/ui/button";
 
-import { getFormattedDate } from "@/utils";
 import { useTracker } from "./context/TrackerContext";
 import useModal from "@/hooks/useModal";
+import { getFormattedDate } from "@/utils/date";
 
 const TrackerPage = () => {
   const { isOpened, openModal, closeModal } = useModal();

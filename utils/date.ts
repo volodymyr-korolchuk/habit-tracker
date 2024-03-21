@@ -1,16 +1,9 @@
 import { Months } from "@/constants/months";
 
-export const getGretting = () => {
-  const time = new Date().getHours();
-
-  if (time >= 0 && time < 11) {
-    return "Good morning! 😎";
-  } else if (time >= 11 && time < 18) {
-    return "Hi there! 👋";
-  } else {
-    return "Good Evening! 🌜";
-  }
-};
+export function getDaysInMonth(year: number, month: number): number {
+  const lastDayOfMonth = new Date(year, month + 1, 0).getDate();
+  return lastDayOfMonth;
+}
 
 export const getFormattedDate = (month: Months, index: number): string => {
   const yearPart = new Date().getFullYear();

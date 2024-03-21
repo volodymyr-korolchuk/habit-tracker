@@ -9,9 +9,10 @@ import {
 } from "react";
 
 import { Months } from "../../../constants/months";
-import { getDaysInMonth } from "@/lib/dateUtils";
 import { getSession } from "next-auth/react";
 import { getUserHabits } from "@/data/habit";
+import { extractHabitTitles, parseHabitsToMap } from "@/utils/data";
+import { getDaysInMonth } from "@/utils/date";
 
 interface TrackerContextType {
   selectedMonth: Months;
@@ -55,16 +56,10 @@ export function TrackerContextProvider({ children }: { children: ReactNode }) {
         const email = session.user.email;
         const habits = await getUserHabits(email);
 
-        setTitles([...habits.map((habit) => habit.title)]);
+        const titlesToDates = parseHabitsToMap(habits);
+        const habitTitles = extractHabitTitles(habits);
 
-        const titlesToDates = new Map();
-        for (const habit of habits) {
-          const dates = habit.keptOnDates.map((date: string) =>
-            new Date(date).toISOString().slice(0, 10)
-          );
-          titlesToDates.set(habit.title, dates);
-        }
-
+        setTitles(habitTitles);
         setHabitToDateStrings(titlesToDates);
       } catch (error) {
         if (error instanceof Error) {
@@ -75,10 +70,6 @@ export function TrackerContextProvider({ children }: { children: ReactNode }) {
 
     getHabitsData();
   }, []);
-
-  useEffect(() => {
-    console.log("HABITS TO DATES: ", habitToDateStrings);
-  }, [habitToDateStrings]);
 
   const months = Object.values(Months).filter(
     (value) => typeof value === "string"

@@ -1,7 +1,7 @@
 "use client";
 
 import LoginForm from "@/components/Forms/LoginForm";
-import { getGretting } from "@/utils";
+import { getGretting } from "@/utils/misc";
 import Link from "next/link";
 
 const Login: React.FC = () => {
