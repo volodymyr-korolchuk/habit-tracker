@@ -1,4 +1,6 @@
+import HabitModel from "@/models/Habit";
 import { Habit } from "@/types";
+import { ObjectId } from "mongoose";
 
 export const createHabit = async (title: string) => {
   const url = `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/habits/create`;
@@ -38,6 +40,28 @@ export const getUserHabits = async (email: string): Promise<Habit[]> => {
     const habits = await habitsByUserId.json();
 
     return habits;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const markHabitKept = async (habitId: ObjectId, date: Date) => {
+  try {
+    const query = { _id: habitId };
+    const update = { $push: { keptOnDates: date } };
+
+    await HabitModel.findOneAndUpdate(query, update, { new: true });
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const discardHabitKept = async (habitId: ObjectId, date: Date) => {
+  try {
+    const filter = { _id: habitId };
+    const update = { $pull: { keptOnDates: date } };
+
+    await HabitModel.findOneAndUpdate(filter, update, { new: true });
   } catch (error) {
     throw error;
   }
