@@ -8,6 +8,7 @@ import Tracker from "@/components/Tracker/Tracker";
 import MonthsContainer from "@/components/Tracker/Months/MonthsContainer";
 import CreateHabitModal from "@/components/Modals/CreateHabitModal";
 import CheckTile from "@/components/Buttons/CheckTile";
+import Day from "@/components/Tracker/Days/Day";
 
 import useModal from "@/hooks/useModal";
 import { useTracker } from "./context/TrackerContext";
@@ -25,12 +26,7 @@ const TrackerPage = () => {
   const header = <MonthsContainer />;
 
   const days = daysOfMonth.map((_, index) => (
-    <div
-      key={index}
-      className="md:h-14 md:w-14 h-12 w-12 bg-neutral-300 flex items-center justify-center text-2xl rounded-sm"
-    >
-      {index + 1}
-    </div>
+    <Day key={index} value={index + 1} />
   ));
 
   const handleClick = (title: string, index: number) => {
@@ -46,10 +42,10 @@ const TrackerPage = () => {
           className="flex items-center gap-1 w-full"
         >
           {daysOfMonth.map((_, index) => {
-            // NEEDS TO BE OPTIMIZED
-            const date = getLocalDateString(selectedMonth, index + 1);
-
-            const isMarked = habit.keptOnDates.includes(date);
+            // Try adding caching
+            const isMarked = habit.keptOnDates.includes(
+              getLocalDateString(selectedMonth, index + 1)
+            );
 
             return <CheckTile isMarked={isMarked} onClick={() => {}} />;
           })}
