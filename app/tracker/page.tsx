@@ -59,8 +59,8 @@ const TrackerPage = () => {
       <Tracker
         aside={aside}
         header={header}
-        content={checkboxes}
         daysOfMonth={days}
+        content={checkboxes}
         openModal={openModal}
       />
       <button
