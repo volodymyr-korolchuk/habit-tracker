@@ -20,7 +20,6 @@ export const createHabit = async (title: string) => {
 
     return data.habit;
   } catch (error) {
-    console.error("Error creating habit:", error);
     throw error;
   }
 };
@@ -35,9 +34,13 @@ export const getUserHabits = async (email: string): Promise<Habit[]> => {
     const habitsByUserIdURL = `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/habits/${user._id}`;
 
     const habitsByUserId = await fetch(habitsByUserIdURL);
-    const habits = await habitsByUserId.json();
+    const data = await habitsByUserId.json();
 
-    return habits;
+    if (data.error) {
+      throw new Error(data.error || "Failed to get user`s habits.");
+    }
+
+    return data;
   } catch (error) {
     throw error;
   }
@@ -57,8 +60,14 @@ export const markHabitKept = async (habitId: string, date: Date) => {
         date,
       }),
     });
-    const result = await response.json();
-    return result.habit;
+
+    const data = await response.json();
+
+    if (data.error) {
+      throw new Error(data.error || "Failed to mark habit as kept.");
+    }
+
+    return data;
   } catch (error) {
     throw error;
   }
@@ -85,8 +94,14 @@ export const discardHabitKept = async (habitId: string, date: Date) => {
         date,
       }),
     });
-    const result = await response.json();
-    return result.habit;
+
+    const data = await response.json();
+
+    if (data.error) {
+      throw new Error(data.error || "Failed to discard habit kept.");
+    }
+
+    return data;
   } catch (error) {
     throw error;
   }

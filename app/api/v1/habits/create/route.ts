@@ -53,7 +53,7 @@ export async function POST(req: NextRequest) {
     }
 
     return NextResponse.json(
-      { message: "Failed to create a new habit." },
+      { error: "Failed to create a new habit." },
       {
         status: 500,
       }

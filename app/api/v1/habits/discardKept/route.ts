@@ -42,14 +42,16 @@ export async function PATCH(req: NextRequest) {
     const query = { _id: habitId };
     const update = { $pull: { keptOnDates: Date.parse(date).toString() } };
 
-    const result = await Habit.findOneAndUpdate(query, update, { new: true });
+    const updatedHabit = await Habit.findOneAndUpdate(query, update, {
+      new: true,
+    });
 
-    return NextResponse.json({ habit: result }, { status: 200 });
+    return NextResponse.json(updatedHabit, { status: 200 });
   } catch (error) {
     if (error instanceof Error) {
       console.log(error.message);
       return NextResponse.json(
-        { message: "Failed to create a new habit. " + error.message },
+        { error: "Failed to create a new habit. " + error.message },
         {
           status: 500,
         }

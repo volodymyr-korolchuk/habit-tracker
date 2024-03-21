@@ -12,7 +12,7 @@ export async function GET(req: NextRequest) {
   } catch (error) {
     console.log(error);
     return NextResponse.json(
-      { error: "Failed to fetch habits data" },
+      { error: "Failed to fetch habits data." },
       {
         status: 500,
       }
