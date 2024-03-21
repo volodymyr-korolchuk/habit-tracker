@@ -4,13 +4,15 @@ import { FaCheck } from "react-icons/fa6";
 
 interface Props {
   isMarked: boolean;
+  onClick: () => void;
 }
 
-const CheckTile: React.FC<Props> = ({ isMarked }) => {
+const CheckTile: React.FC<Props> = ({ isMarked, onClick }) => {
   return (
     <div className="h-12 w-12 md:h-14 md:w-14 bg-neutral-400 flex items-center justify-center rounded-md">
       <Button
         type="button"
+        onClick={onClick}
         className={`h-full border-none shadow-none w-full ${
           isMarked
             ? "bg-green-400 hover:bg-green-300"

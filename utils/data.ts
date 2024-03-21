@@ -1,7 +1,7 @@
 import { Habit } from "@/types";
 
 export const parseHabitsToMap = (habits: Habit[]) => {
-  const map = new Map();
+  const map = new Map<string, string[]>();
 
   for (const habit of habits) {
     const dates = habit.keptOnDates.map((date: string) =>

@@ -12,18 +12,15 @@ import CheckTile from "@/components/Buttons/CheckTile";
 import useModal from "@/hooks/useModal";
 import { useTracker } from "./context/TrackerContext";
 
-import { getFormattedDate } from "@/utils/date";
+import { getLocalDateString } from "@/utils/date";
 
 const TrackerPage = () => {
   const { isOpened, openModal, closeModal } = useModal();
-  const {
-    daysOfMonth,
-    selectedMonth,
-    titles,
-    habitToDateStrings: habitToDates,
-  } = useTracker();
+  const { daysOfMonth, selectedMonth, habits } = useTracker();
 
-  const aside = titles.map((title) => <HabitItem key={title} label={title} />);
+  const aside = habits.map((habit) => (
+    <HabitItem key={habit.title} label={habit.title} />
+  ));
 
   const header = <MonthsContainer />;
 
@@ -36,18 +33,25 @@ const TrackerPage = () => {
     </div>
   ));
 
+  const handleClick = (title: string, index: number) => {
+    // TODO
+  };
+
   const checkboxes =
-    habitToDates &&
-    [...habitToDates].map((habit) => {
+    habits &&
+    [...habits].map((habit) => {
       return (
-        <div key={habit[0]} className="flex items-center gap-1 w-full">
+        <div
+          key={habit._id.toString()}
+          className="flex items-center gap-1 w-full"
+        >
           {daysOfMonth.map((_, index) => {
             // NEEDS TO BE OPTIMIZED
-            const isMarked = habit[1].includes(
-              getFormattedDate(selectedMonth, index)
-            );
+            const date = getLocalDateString(selectedMonth, index + 1);
 
-            return <CheckTile isMarked={isMarked} />;
+            const isMarked = habit.keptOnDates.includes(date);
+
+            return <CheckTile isMarked={isMarked} onClick={() => {}} />;
           })}
         </div>
       );

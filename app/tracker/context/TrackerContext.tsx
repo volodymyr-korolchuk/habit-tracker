@@ -12,24 +12,22 @@ import { Months } from "@/constants/months";
 import { getSession } from "next-auth/react";
 import { getUserHabits } from "@/data/habit";
 import { getDaysInMonth } from "@/utils/date";
-import { extractHabitTitles, parseHabitsToMap } from "@/utils/data";
+import { Habit } from "@/types";
 
 interface TrackerContextType {
   selectedMonth: Months;
   setSelectedMonth: (month: Months) => void;
 
   daysOfMonth: number[];
-  habitToDateStrings: Map<string, string[]> | null;
-  titles: string[];
+  habits: Habit[];
   months: string[];
 }
 
 const TrackerContext = createContext<TrackerContextType>({
   selectedMonth: Months.JAN,
   daysOfMonth: Array(31).fill(0),
-  habitToDateStrings: new Map<string, string[]>(),
-  titles: [""],
-  months: [""],
+  months: [],
+  habits: [],
   setSelectedMonth: () => {},
 });
 
@@ -38,12 +36,8 @@ export function useTracker() {
 }
 
 export function TrackerContextProvider({ children }: { children: ReactNode }) {
+  const [habits, setHabits] = useState<Habit[]>([]);
   const [selectedMonth, setSelectedMonth] = useState<number>(Months.JAN);
-  const [habitToDateStrings, setHabitToDateStrings] = useState<Map<
-    string,
-    string[]
-  > | null>(null);
-  const [titles, setTitles] = useState<string[]>([]);
 
   useEffect(() => {
     const getHabitsData = async () => {
@@ -56,11 +50,14 @@ export function TrackerContextProvider({ children }: { children: ReactNode }) {
         const email = session.user.email;
         const habits = await getUserHabits(email);
 
-        const titlesToDates = parseHabitsToMap(habits);
-        const habitTitles = extractHabitTitles(habits);
+        const habitsWithLocalDateStrings = habits.map((habit) => ({
+          ...habit,
+          keptOnDates: habit.keptOnDates.map((date: string) =>
+            new Date(date).toLocaleDateString()
+          ),
+        }));
 
-        setTitles(habitTitles);
-        setHabitToDateStrings(titlesToDates);
+        setHabits(habitsWithLocalDateStrings);
       } catch (error) {
         if (error instanceof Error) {
           throw error;
@@ -90,8 +87,7 @@ export function TrackerContextProvider({ children }: { children: ReactNode }) {
         setSelectedMonth: handleSetSelectedMonth,
         daysOfMonth,
         months,
-        habitToDateStrings,
-        titles,
+        habits,
       }}
     >
       {children}
