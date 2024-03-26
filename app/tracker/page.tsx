@@ -2,6 +2,7 @@
 
 import React, { useEffect, useMemo } from "react";
 import { getSession, signOut } from "next-auth/react";
+import toast from "react-hot-toast";
 
 import HabitItem from "@/components/Tracker/Habits/Habit";
 import Tracker from "@/components/Tracker/Tracker";
@@ -10,21 +11,15 @@ import CreateHabitModal from "@/components/Modals/CreateHabitModal";
 import CheckTile from "@/components/Buttons/CheckTile";
 import Day from "@/components/Tracker/Days/Day";
 
-import useModal from "@/hooks/useModal";
-
-import { getDaysInMonth, getFormattedISODateString } from "@/utils/date";
-import toast from "react-hot-toast";
 import { discardHabitKept, getUserHabits, markHabitKept } from "@/data/habit";
+import { getDaysInMonth, getFormattedISODateString } from "@/utils/date";
 import { useTrackerStore } from "@/contexts/store";
+import { useModal } from "@/hooks/useModal";
 
 const TrackerPage = () => {
   const { isOpened, openModal, closeModal } = useModal();
   const { habits, selectedMonth, pushKeptOnDate, removeKeptOnDate, setHabits } =
     useTrackerStore();
-
-  const daysOfMonth = Array(
-    getDaysInMonth(new Date().getFullYear(), selectedMonth)
-  ).fill(0);
 
   useEffect(() => {
     const getHabitsData = async () => {
@@ -95,6 +90,10 @@ const TrackerPage = () => {
   const aside = habits.map((habit) => (
     <HabitItem key={habit.title} label={habit.title} />
   ));
+
+  const daysOfMonth = Array(
+    getDaysInMonth(new Date().getFullYear(), selectedMonth)
+  ).fill(0);
 
   const days = daysOfMonth.map((_, index) => (
     <Day key={index} value={index + 1} />
