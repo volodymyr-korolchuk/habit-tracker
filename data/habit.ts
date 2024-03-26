@@ -46,7 +46,14 @@ export const getUserHabits = async (email: string): Promise<Habit[]> => {
   }
 };
 
-export const markHabitKept = async (habitId: string, date: string) => {
+/**
+ *
+ * @param {string} habitId
+ * ID string of a habit that belongs to a certain user.
+ * @param {string} dateString
+ * Date string. Should only be provided as ISO string
+ */
+export const markHabitKept = async (habitId: string, dateString: string) => {
   try {
     const markHabitKeptURL = `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/habits/markKept`;
 
@@ -57,7 +64,7 @@ export const markHabitKept = async (habitId: string, date: string) => {
       },
       body: JSON.stringify({
         habitId,
-        date,
+        date: dateString,
       }),
     });
 
@@ -76,11 +83,11 @@ export const markHabitKept = async (habitId: string, date: string) => {
 /**
  *
  * @param {string} habitId
- * ID string of a habit of a certain user.
- * @param {string} date
- * Date string. Should only be provided in a form of YYYY-MM-dd
+ * ID string of a habit that belongs to a certain user.
+ * @param {string} dateString
+ * Date string. Should only be provided as ISO string
  */
-export const discardHabitKept = async (habitId: string, date: string) => {
+export const discardHabitKept = async (habitId: string, dateString: string) => {
   try {
     const discardHabitKeptURL = `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/habits/discardKept`;
 
@@ -91,7 +98,7 @@ export const discardHabitKept = async (habitId: string, date: string) => {
       },
       body: JSON.stringify({
         habitId,
-        date,
+        date: dateString,
       }),
     });
 
