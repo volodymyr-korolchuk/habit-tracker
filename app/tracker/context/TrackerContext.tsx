@@ -1,7 +1,9 @@
 "use client";
 
 import {
+  Dispatch,
   ReactNode,
+  SetStateAction,
   createContext,
   useContext,
   useEffect,
@@ -21,6 +23,8 @@ interface TrackerContextType {
   daysOfMonth: number[];
   habits: Habit[];
   months: string[];
+
+  setHabits: Dispatch<SetStateAction<Habit[]>>;
 }
 
 const TrackerContext = createContext<TrackerContextType>({
@@ -29,6 +33,7 @@ const TrackerContext = createContext<TrackerContextType>({
   months: [],
   habits: [],
   setSelectedMonth: () => {},
+  setHabits: () => {},
 });
 
 export function useTracker() {
@@ -88,6 +93,7 @@ export function TrackerContextProvider({ children }: { children: ReactNode }) {
         daysOfMonth,
         months,
         habits,
+        setHabits,
       }}
     >
       {children}

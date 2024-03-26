@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useMemo } from "react";
 import { signOut } from "next-auth/react";
 
 import HabitItem from "@/components/Tracker/Habits/Habit";
@@ -16,10 +16,12 @@ import { useTracker } from "./context/TrackerContext";
 import { getFormattedISODateString, getLocalDateString } from "@/utils/date";
 import toast from "react-hot-toast";
 import { markHabitKept } from "@/data/habit";
+import { Habit } from "@/types";
 
 const TrackerPage = () => {
   const { isOpened, openModal, closeModal } = useModal();
-  const { daysOfMonth, selectedMonth, habits } = useTracker();
+  const { daysOfMonth, selectedMonth, habits, setHabits } = useTracker();
+  let prevHabitState: Habit;
 
   const aside = habits.map((habit) => (
     <HabitItem key={habit.title} label={habit.title} />
@@ -31,46 +33,86 @@ const TrackerPage = () => {
     <Day key={index} value={index + 1} />
   ));
 
+  const updateOptimistic = (habitId: string, date: Date) => {
+    // try using useReducer
+
+    setHabits((prev) => {
+      const indexOfUpdated = prev.findIndex(
+        (x) => x._id.toString() === habitId
+      );
+      if (indexOfUpdated === -1) return prev;
+
+      prevHabitState = prev[indexOfUpdated];
+
+      return prev.map((habit, index) => {
+        if (index !== indexOfUpdated) return habit;
+
+        return {
+          ...habit,
+          keptOnDates: [
+            ...habit.keptOnDates,
+            getLocalDateString(date.getMonth(), date.getDate()),
+          ],
+        };
+      });
+    });
+  };
+
+  const resetOptimistic = (habitId: string) => {
+    setHabits((prev) => {
+      return prev.map((habit) => {
+        if (habit._id.toString() === habitId) {
+          return prevHabitState;
+        }
+        return habit;
+      });
+    });
+  };
+
   const handleClick = async (habitId: string, day: number) => {
+    const date = new Date(new Date().getFullYear(), selectedMonth, day);
+
     const formattedDate = getFormattedISODateString(
-      new Date().getFullYear(),
-      selectedMonth,
-      day
+      date.getFullYear(),
+      date.getMonth(),
+      date.getDate()
     );
 
     try {
+      updateOptimistic(habitId, date);
+
       await markHabitKept(habitId, formattedDate);
     } catch (error) {
       if (error instanceof Error) {
         toast.error(error.message);
       }
+      resetOptimistic(habitId);
     }
   };
 
-  const checkboxes =
-    habits &&
-    [...habits].map((habit) => {
-      return (
-        <div
-          key={habit._id.toString()}
-          className="flex items-center gap-1 w-full"
-        >
-          {daysOfMonth.map((_, index) => {
-            // Try adding caching
-            const isMarked = habit.keptOnDates.includes(
-              getLocalDateString(selectedMonth, index + 1)
-            );
+  const checkboxes = useMemo(() => {
+    if (!habits) return null;
 
-            return (
-              <CheckTile
-                isMarked={isMarked}
-                onClick={() => handleClick(habit._id.toString(), index + 1)}
-              />
-            );
-          })}
-        </div>
-      );
-    });
+    return habits.map((habit) => (
+      <div
+        key={habit._id.toString()}
+        className="flex items-center gap-1 w-full"
+      >
+        {daysOfMonth.map((_, index) => {
+          const isMarked = habit.keptOnDates.includes(
+            getLocalDateString(selectedMonth, index + 1)
+          );
+          return (
+            <CheckTile
+              key={index}
+              isMarked={isMarked}
+              onClick={() => handleClick(habit._id.toString(), index + 1)}
+            />
+          );
+        })}
+      </div>
+    ));
+  }, [habits, selectedMonth, setHabits]);
 
   return (
     <div className="relative flex w-full h-screen items-center justify-center bg-neutral-900">
