@@ -5,6 +5,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "../ui/label";
 import { Button } from "../ui/button";
 import { createHabit } from "@/data/habit";
+import { useTrackerStore } from "@/contexts/store";
+import { getSession } from "next-auth/react";
 
 interface Props {
   isOpened: boolean;
@@ -21,6 +23,7 @@ const isValidInput = (title: string) => {
 
 const CreateHabitModal: React.FC<Props> = ({ isOpened, onClose }) => {
   const [title, setTitle] = useState("");
+  const { habits, fetch } = useTrackerStore();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -30,13 +33,20 @@ const CreateHabitModal: React.FC<Props> = ({ isOpened, onClose }) => {
     }
 
     try {
+      const session = await getSession();
+      if (!session || !session.user?.email) {
+        return;
+      }
+
       const data = await createHabit(title);
 
       if (data?.error) {
         toast.error(data.error);
-      } else {
-        toast.success("New habit created!");
+        return;
       }
+
+      toast.success("New Habit created!");
+      fetch(session.user.email);
     } catch (error) {
       if (error instanceof Error) {
         toast.error(error.message);

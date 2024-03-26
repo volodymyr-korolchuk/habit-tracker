@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect } from "react";
 import { getSession, signOut } from "next-auth/react";
 import toast from "react-hot-toast";
 
@@ -18,29 +18,32 @@ import { useModal } from "@/hooks/useModal";
 
 const TrackerPage = () => {
   const { isOpened, openModal, closeModal } = useModal();
-  const { habits, selectedMonth, pushKeptOnDate, removeKeptOnDate, setHabits } =
-    useTrackerStore();
+  const {
+    habits,
+    selectedMonth,
+    pushKeptOnDate,
+    removeKeptOnDate,
+    setHabits,
+    fetch,
+  } = useTrackerStore();
 
   useEffect(() => {
-    const getHabitsData = async () => {
+    const fetchHabits = async () => {
       try {
         const session = await getSession();
         if (!session || !session.user?.email) {
           return;
         }
 
-        const email = session.user.email;
-        const habits = await getUserHabits(email);
-
-        setHabits(habits);
+        fetch(session.user.email);
       } catch (error) {
         if (error instanceof Error) {
-          throw error;
+          toast.error(error.message);
         }
       }
     };
 
-    getHabitsData();
+    fetchHabits();
   }, []);
 
   const handleMarkKept = async (habitId: string, day: number) => {
