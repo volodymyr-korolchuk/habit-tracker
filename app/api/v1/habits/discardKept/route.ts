@@ -7,15 +7,6 @@ import { connectToDB } from "@/utils/database";
 
 export async function PATCH(req: NextRequest) {
   try {
-    const response = await auth();
-
-    if (!response || !response?.user?.email) {
-      return NextResponse.json(
-        { error: "No active session." },
-        { status: 403 }
-      );
-    }
-
     const body = await req.json();
     const { habitId, date } = body;
 
