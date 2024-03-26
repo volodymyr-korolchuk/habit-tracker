@@ -80,9 +80,9 @@ export const markHabitKept = async (habitId: string, date: string) => {
  * @param {string} date
  * Date string. Should only be provided in a form of YYYY-MM-dd
  */
-export const discardHabitKept = async (habitId: string, date: Date) => {
+export const discardHabitKept = async (habitId: string, date: string) => {
   try {
-    const discardHabitKeptURL = `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/habits/discardKept/${habitId}/${date}`;
+    const discardHabitKeptURL = `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/habits/discardKept`;
 
     const response = await fetch(discardHabitKeptURL, {
       method: "PATCH",

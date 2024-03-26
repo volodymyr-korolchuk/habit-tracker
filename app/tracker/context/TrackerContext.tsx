@@ -18,12 +18,12 @@ import { Habit } from "@/types";
 
 interface TrackerContextType {
   selectedMonth: Months;
-  setSelectedMonth: (month: Months) => void;
 
   daysOfMonth: number[];
   habits: Habit[];
   months: string[];
 
+  setSelectedMonth: (month: Months) => void;
   setHabits: Dispatch<SetStateAction<Habit[]>>;
 }
 
@@ -55,14 +55,7 @@ export function TrackerContextProvider({ children }: { children: ReactNode }) {
         const email = session.user.email;
         const habits = await getUserHabits(email);
 
-        const habitsWithLocalDateStrings = habits.map((habit) => ({
-          ...habit,
-          keptOnDates: habit.keptOnDates.map((date: string) =>
-            new Date(date).toLocaleDateString()
-          ),
-        }));
-
-        setHabits(habitsWithLocalDateStrings);
+        setHabits(habits);
       } catch (error) {
         if (error instanceof Error) {
           throw error;

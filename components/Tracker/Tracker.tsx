@@ -20,10 +20,6 @@ const Tracker: React.FC<Props> = ({
   daysOfMonth,
   openModal,
 }) => {
-  const handleCreateHabit = () => {
-    openModal();
-  };
-
   return (
     <div className="flex items-center justify-center w-[95%]">
       <div className="bg-blue-100/20 border-[1px] border-white rounded-lg flex md:flex-col items-center flex-1 max-w-[1000px] h-[500px] overflow-hidden relative">
