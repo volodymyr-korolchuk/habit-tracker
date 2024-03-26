@@ -13,7 +13,9 @@ import Day from "@/components/Tracker/Days/Day";
 import useModal from "@/hooks/useModal";
 import { useTracker } from "./context/TrackerContext";
 
-import { getLocalDateString } from "@/utils/date";
+import { getFormattedISODateString, getLocalDateString } from "@/utils/date";
+import toast from "react-hot-toast";
+import { markHabitKept } from "@/data/habit";
 
 const TrackerPage = () => {
   const { isOpened, openModal, closeModal } = useModal();
@@ -29,8 +31,20 @@ const TrackerPage = () => {
     <Day key={index} value={index + 1} />
   ));
 
-  const handleClick = (title: string, index: number) => {
-    // TODO
+  const handleClick = async (habitId: string, day: number) => {
+    const formattedDate = getFormattedISODateString(
+      new Date().getFullYear(),
+      selectedMonth,
+      day
+    );
+
+    try {
+      await markHabitKept(habitId, formattedDate);
+    } catch (error) {
+      if (error instanceof Error) {
+        toast.error(error.message);
+      }
+    }
   };
 
   const checkboxes =
@@ -47,7 +61,12 @@ const TrackerPage = () => {
               getLocalDateString(selectedMonth, index + 1)
             );
 
-            return <CheckTile isMarked={isMarked} onClick={() => {}} />;
+            return (
+              <CheckTile
+                isMarked={isMarked}
+                onClick={() => handleClick(habit._id.toString(), index + 1)}
+              />
+            );
           })}
         </div>
       );

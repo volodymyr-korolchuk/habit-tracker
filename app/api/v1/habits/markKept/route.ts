@@ -40,7 +40,10 @@ export async function PATCH(req: NextRequest) {
     await connectToDB();
 
     const query = { _id: habitId };
-    const update = { $push: { keptOnDates: Date.parse(date).toString() } };
+
+    const update = {
+      $push: { keptOnDates: date },
+    };
 
     const updatedHabit = await Habit.findOneAndUpdate(query, update, {
       new: true,

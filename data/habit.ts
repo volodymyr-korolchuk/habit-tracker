@@ -46,9 +46,9 @@ export const getUserHabits = async (email: string): Promise<Habit[]> => {
   }
 };
 
-export const markHabitKept = async (habitId: string, date: Date) => {
+export const markHabitKept = async (habitId: string, date: string) => {
   try {
-    const markHabitKeptURL = `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/habits/markKept/${habitId}/${date}`;
+    const markHabitKeptURL = `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/habits/markKept`;
 
     const response = await fetch(markHabitKeptURL, {
       method: "PATCH",
