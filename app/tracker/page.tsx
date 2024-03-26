@@ -11,18 +11,20 @@ import CheckTile from "@/components/Buttons/CheckTile";
 import Day from "@/components/Tracker/Days/Day";
 
 import useModal from "@/hooks/useModal";
-import { useTracker } from "./context/TrackerContext";
 
-import { getFormattedISODateString, getLocalDateString } from "@/utils/date";
+import { getDaysInMonth, getFormattedISODateString } from "@/utils/date";
 import toast from "react-hot-toast";
 import { discardHabitKept, getUserHabits, markHabitKept } from "@/data/habit";
 import { useTrackerStore } from "@/contexts/store";
 
 const TrackerPage = () => {
   const { isOpened, openModal, closeModal } = useModal();
-  const { habits, pushKeptOnDate, removeKeptOnDate, setHabits } =
+  const { habits, selectedMonth, pushKeptOnDate, removeKeptOnDate, setHabits } =
     useTrackerStore();
-  const { daysOfMonth, selectedMonth } = useTracker();
+
+  const daysOfMonth = Array(
+    getDaysInMonth(new Date().getFullYear(), selectedMonth)
+  ).fill(0);
 
   useEffect(() => {
     const getHabitsData = async () => {
@@ -45,16 +47,6 @@ const TrackerPage = () => {
 
     getHabitsData();
   }, []);
-
-  const aside = habits.map((habit) => (
-    <HabitItem key={habit.title} label={habit.title} />
-  ));
-
-  const header = <MonthsContainer />;
-
-  const days = daysOfMonth.map((_, index) => (
-    <Day key={index} value={index + 1} />
-  ));
 
   const handleMarkKept = async (habitId: string, day: number) => {
     const date = new Date(new Date().getFullYear(), selectedMonth, day);
@@ -98,6 +90,16 @@ const TrackerPage = () => {
     }
   };
 
+  const header = <MonthsContainer />;
+
+  const aside = habits.map((habit) => (
+    <HabitItem key={habit.title} label={habit.title} />
+  ));
+
+  const days = daysOfMonth.map((_, index) => (
+    <Day key={index} value={index + 1} />
+  ));
+
   const checkboxes = !habits
     ? null
     : habits.map((habit) => (
@@ -113,16 +115,15 @@ const TrackerPage = () => {
                 index + 1
               )
             );
+
             return (
               <CheckTile
                 key={index}
                 isMarked={isMarked}
                 onClick={
-                  !isMarked
-                    ? () => {
-                        handleMarkKept(habit._id.toString(), index + 1);
-                      }
-                    : () => handleDiscardKept(habit._id.toString(), index + 1)
+                  isMarked
+                    ? () => handleDiscardKept(habit._id.toString(), index + 1)
+                    : () => handleMarkKept(habit._id.toString(), index + 1)
                 }
               />
             );

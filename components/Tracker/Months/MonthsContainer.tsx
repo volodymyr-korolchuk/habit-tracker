@@ -3,15 +3,19 @@
 import React from "react";
 
 import TinyButton from "@/components/Buttons/TinyButton";
-import { useTracker } from "@/app/tracker/context/TrackerContext";
 import { Months } from "@/constants/months";
+import { useTrackerStore } from "@/contexts/store";
 
 const MonthsContainer: React.FC = () => {
-  const { months, selectedMonth, setSelectedMonth } = useTracker();
+  const { selectedMonth, setSelectedMonth } = useTrackerStore();
 
   const handleOnClick = (value: Months) => {
     setSelectedMonth(value);
   };
+
+  const months = Object.values(Months).filter(
+    (value) => typeof value === "string"
+  ) as string[];
 
   return (
     <div className="flex flex-col flex-1 h-full md:h-auto md:flex-row gap-1 justify-around">
