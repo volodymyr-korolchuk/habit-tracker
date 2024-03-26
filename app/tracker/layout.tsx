@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import "./../globals.css";
 
-import { TrackerContextProvider } from "./context/TrackerContext";
 import { Toaster } from "react-hot-toast";
 
 export const metadata: Metadata = {
@@ -17,7 +16,7 @@ export default function RootLayout({
   return (
     <>
       <Toaster />
-      <TrackerContextProvider>{children}</TrackerContextProvider>
+      {children}
     </>
   );
 }
