@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { getSession, signOut } from "next-auth/react";
 import toast from "react-hot-toast";
 
@@ -15,6 +15,8 @@ import { discardHabitKept, getUserHabits, markHabitKept } from "@/data/habit";
 import { getDaysInMonth, getFormattedISODateString } from "@/utils/date";
 import { useTrackerStore } from "@/contexts/store";
 import { useModal } from "@/hooks/useModal";
+import Background from "@/components/Tracker/Background/Background";
+import Island from "@/components/Island/Island";
 
 const TrackerPage = () => {
   const { isOpened, openModal, closeModal } = useModal();
@@ -134,7 +136,9 @@ const TrackerPage = () => {
       ));
 
   return (
-    <div className="relative flex w-full h-screen items-center justify-center bg-neutral-900">
+    <div className="relative flex w-full h-screen items-center justify-center bg-gradient-to-br overflow-hidden from-green-900/80 via-green-500/60 to-green-800/80">
+      <Background />
+      <Island />
       <CreateHabitModal isOpened={isOpened} onClose={closeModal} />
       <Tracker
         aside={aside}
@@ -143,12 +147,6 @@ const TrackerPage = () => {
         content={checkboxes}
         openModal={openModal}
       />
-      <button
-        onClick={() => signOut()}
-        className="z-50 absolute top-2 right-2 bg-rose-700 rounded-md p-2 px-2 m-2 text-xl"
-      >
-        Sign out
-      </button>
     </div>
   );
 };

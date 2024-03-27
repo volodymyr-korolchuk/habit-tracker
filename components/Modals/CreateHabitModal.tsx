@@ -23,7 +23,7 @@ const isValidInput = (title: string) => {
 
 const CreateHabitModal: React.FC<Props> = ({ isOpened, onClose }) => {
   const [title, setTitle] = useState("");
-  const { habits, fetch } = useTrackerStore();
+  const { fetch } = useTrackerStore();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -67,7 +67,7 @@ const CreateHabitModal: React.FC<Props> = ({ isOpened, onClose }) => {
         <section className="flex flex-col items-center bg-neutral-100 backdrop-blur-xl rounded-xl p-3">
           <div className="w-full flex items-center justify-between pb-2 pl-1 gap-2">
             <p className="text-3xl">Create a new Habit!</p>
-            <button onClick={onClose} className="hover:bg-red-500 rounded-md">
+            <button onClick={onClose} className="hover:bg-red-400 rounded-md">
               <FaXmark size={35} />
             </button>
           </div>
@@ -94,7 +94,7 @@ const CreateHabitModal: React.FC<Props> = ({ isOpened, onClose }) => {
             <Button
               type="submit"
               form="new-habit-form"
-              className="bg-green-400 hover:bg-green-200 w-full h-14 p-2 px-4 text-2xl rounded-md"
+              className="bg-green-300 hover:bg-green-200 w-full h-14 p-2 px-4 text-2xl text-black rounded-md"
             >
               Create
             </Button>

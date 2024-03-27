@@ -15,11 +15,11 @@ const CheckTile: React.FC<Props> = ({ isMarked, onClick }) => {
         onClick={onClick}
         className={`h-full border-none shadow-none w-full ${
           isMarked
-            ? "bg-green-400 hover:bg-green-300"
+            ? "bg-green-300 hover:bg-green-200"
             : "bg-neutral-400 hover:bg-neutral-300"
         }`}
       >
-        {isMarked ? <FaCheck size={32} /> : null}
+        {isMarked ? <FaCheck size={36} /> : null}
       </Button>
     </div>
   );
