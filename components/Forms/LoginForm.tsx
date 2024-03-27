@@ -20,12 +20,14 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
 import { FormError } from "@/components/Forms/FormError";
+import { useRouter } from "next/navigation";
 
 type FormFields = z.infer<typeof LoginSchema>;
 
 const LoginForm = () => {
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | undefined>("");
+  const router = useRouter();
 
   const form = useForm<FormFields>({
     resolver: zodResolver(LoginSchema),
@@ -40,7 +42,11 @@ const LoginForm = () => {
 
     startTransition(() => {
       login(values).then((data) => {
-        setError(data?.error);
+        if (data?.error) {
+          setError(data?.error);
+        } else {
+          router.refresh();
+        }
       });
     });
   };

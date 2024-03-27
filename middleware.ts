@@ -37,5 +37,5 @@ export default auth((req) => {
 });
 
 export const config = {
-  matcher: ["/tracker", "/login", "/signup"],
+  matcher: ["/((?!api/|_next/|_static/|_vercel|[\\w-]+\\.\\w+).*)"],
 };
