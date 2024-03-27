@@ -7,7 +7,7 @@ import * as z from "zod";
 import User from "@/models/User";
 
 import { RegisterSchema } from "@/schemas";
-import { getUserByEmail } from "@/data/user";
+import { getUserByEmail, getUserByUsername } from "@/data/user";
 
 export const register = async (values: z.infer<typeof RegisterSchema>) => {
   const validatedFields = RegisterSchema.safeParse(values);
@@ -19,9 +19,14 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
   const { username, email, password } = validatedFields.data;
 
   try {
-    const user = await getUserByEmail(email);
+    const userByEmail = await getUserByEmail(email);
+    const userByUsername = await getUserByUsername(username);
 
-    if (user) {
+    if (userByUsername?.username) {
+      return { error: "Username is already taken" };
+    }
+
+    if (userByEmail?.email) {
       return { error: "Email already in use" };
     }
 

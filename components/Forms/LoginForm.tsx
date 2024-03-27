@@ -4,7 +4,7 @@ import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoginSchema } from "@/schemas";
 
-import { startTransition, useState, useTransition } from "react";
+import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { login } from "@/actions/login";
 
@@ -24,7 +24,7 @@ import { FormError } from "@/components/Forms/FormError";
 type FormFields = z.infer<typeof LoginSchema>;
 
 const LoginForm = () => {
-  const [isPending, setPending] = useTransition();
+  const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | undefined>("");
 
   const form = useForm<FormFields>({

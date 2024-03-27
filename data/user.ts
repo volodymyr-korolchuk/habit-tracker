@@ -15,6 +15,18 @@ export const getUserByEmail = async (email: string) => {
   }
 };
 
+export const getUserByUsername = async (username: string) => {
+  try {
+    await connectToDB();
+
+    const user = await User.findOne({ username });
+
+    return user;
+  } catch (error) {
+    return null;
+  }
+};
+
 export const getUserById = async (id: string) => {
   try {
     await connectToDB();

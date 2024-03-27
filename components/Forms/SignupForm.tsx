@@ -4,7 +4,7 @@ import * as z from "zod";
 import { RegisterSchema } from "@/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { startTransition, useState, useTransition } from "react";
+import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { register } from "@/actions/register";
 
@@ -25,7 +25,7 @@ import { FormSuccess } from "@/components/Forms/FormSuccess";
 type FormFields = z.infer<typeof RegisterSchema>;
 
 const SignupForm = () => {
-  const [isPending, setPending] = useTransition();
+  const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
 
