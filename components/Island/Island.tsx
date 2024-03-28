@@ -1,5 +1,6 @@
-import { signOut } from "next-auth/react";
-import { useState } from "react";
+import { getSession, signOut } from "next-auth/react";
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 const Island = () => {
   const [islandOpened, setIslandOpened] = useState(false);
@@ -9,7 +10,7 @@ const Island = () => {
       onClick={() => setIslandOpened((prev) => !prev)}
       className={`absolute top-5 flex items-center p-3 justify-between rounded-full  transition-all ${
         islandOpened
-          ? "w-96 h-16 bg-black"
+          ? "sm:w-96 w-64 h-16 bg-black"
           : "hover:bg-black/50 w-8 h-8 bg-black/20"
       }`}
     >
