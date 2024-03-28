@@ -23,6 +23,7 @@ const TrackerPage = () => {
   const {
     habits,
     selectedMonth,
+    daysInSelectedMonth,
     pushKeptOnDate,
     removeKeptOnDate,
     setHabits,
@@ -97,8 +98,6 @@ const TrackerPage = () => {
       <AsideSkeleton />
     );
 
-  const daysInMonth = getDaysInMonth(new Date().getFullYear(), selectedMonth);
-
   const checkTiles =
     habits.length > 0 ? (
       habits.map((habit) => (
@@ -106,7 +105,7 @@ const TrackerPage = () => {
           key={habit._id.toString()}
           className="flex items-center gap-1 w-full"
         >
-          {Array.from({ length: daysInMonth }, (_, index) => {
+          {Array.from({ length: daysInSelectedMonth }, (_, index) => {
             const isMarked = habit.keptOnDates.includes(
               getFormattedISODateString(
                 new Date().getFullYear(),

@@ -3,15 +3,15 @@ import CheckTileSkeleton from "./CheckTileSkeleton";
 import { getDaysInMonth } from "@/utils/date";
 
 const ContentSkeleton = () => {
-  const { selectedMonth } = useTrackerStore();
-  const daysInMonth = getDaysInMonth(new Date().getFullYear(), selectedMonth);
+  const { daysInSelectedMonth } = useTrackerStore();
 
-  const habitSkeletonsRow = Array.from({ length: daysInMonth }, (_, index) => (
-    <CheckTileSkeleton key={index} />
-  ));
+  const habitSkeletonsRow = Array.from(
+    { length: daysInSelectedMonth },
+    (_, index) => <CheckTileSkeleton key={index} />
+  );
 
   const contentSkeleton = Array.from({ length: 3 }, (_, index) => (
-    <div className="flex gap-1 items-center justify-start">
+    <div key={index} className="flex gap-1 items-center justify-start">
       {habitSkeletonsRow}
     </div>
   ));

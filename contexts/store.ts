@@ -1,11 +1,13 @@
 import { Months } from "@/constants/months";
 import { getUserHabits } from "@/data/habit";
 import { Habit } from "@/types";
+import { getDaysInMonth } from "@/utils/date";
 import { create } from "zustand";
 
 type State = {
   habits: Habit[];
   selectedMonth: Months;
+  daysInSelectedMonth: number;
 };
 
 type Actions = {
@@ -44,8 +46,13 @@ const updateHabitDate = (
 export const useTrackerStore = create<State & Actions>((set) => ({
   habits: [],
   selectedMonth: Months.JAN,
+  daysInSelectedMonth: 31,
 
-  setSelectedMonth: (month: Months) => set(() => ({ selectedMonth: month })),
+  setSelectedMonth: (month: Months) =>
+    set(() => ({
+      selectedMonth: month,
+      daysInSelectedMonth: getDaysInMonth(new Date().getFullYear(), month),
+    })),
 
   fetch: async (email: string) => {
     try {

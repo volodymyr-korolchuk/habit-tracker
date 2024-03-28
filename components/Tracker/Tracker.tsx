@@ -16,13 +16,11 @@ interface Props {
 }
 
 const Tracker: React.FC<Props> = ({ habitTitles, checkTiles, openModal }) => {
-  const { selectedMonth } = useTrackerStore();
+  const { daysInSelectedMonth } = useTrackerStore();
 
-  const daysInMonth = getDaysInMonth(new Date().getFullYear(), selectedMonth);
-  const daysOfSelectedMonth = Array.from(
-    { length: daysInMonth },
-    (_, index) => <Day key={index} value={index + 1} />
-  );
+  const daysTiles = Array.from({ length: daysInSelectedMonth }, (_, index) => (
+    <Day key={index} value={index + 1} />
+  ));
 
   return (
     <div className="flex items-center justify-center w-[95%]">
@@ -49,7 +47,7 @@ const Tracker: React.FC<Props> = ({ habitTitles, checkTiles, openModal }) => {
 
           <section className="flex flex-col">
             <div className="flex gap-x-1 items-center justify-start px-1 md:h-auto h-14 p-1">
-              {daysOfSelectedMonth}
+              {daysTiles}
             </div>
 
             <div className="w-full h-screen flex-1 flex flex-col justify-between gap-y-1 p-1">
