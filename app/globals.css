@@ -66,6 +66,20 @@
   }
 }
 
+/* Custom CSS for shimmer animation */
+@keyframes shimmer {
+  to {
+    background-position-x: 0%;
+  }
+}
+
+.shimmer {
+  background: linear-gradient(90deg, #e6e6e5 40%, #cad8d2 50%, #e6e6e5 60%);
+  background-size: 300%;
+  background-position-x: 100%;
+  animation: shimmer 1s infinite linear;
+}
+
 @layer base {
   * {
     @apply border-border;
