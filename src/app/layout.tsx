@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Poppins } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
+const poppins = Poppins({ weight: ["100", "200", "300", "400", "500", "600"], subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Habit Tracker",
@@ -16,7 +16,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <link rel="icon" href="/svgs/flower-.svg" sizes="any" />
+      <body className={poppins.className}>{children}</body>
     </html>
   );
 }
